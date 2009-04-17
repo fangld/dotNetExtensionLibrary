@@ -5,14 +5,14 @@ using System.Text;
 namespace ExtendLibrary.Tools
 {
     /// <summary>
-    /// 时间处理器
+    /// Datetime handler
     /// </summary>
     public static class DateTimeHandler
     {
         #region Fields
 
         /// <summary>
-        /// 每个季度第一个月的数字
+        /// the first month number of seasons
         /// </summary>
         private readonly static int[] firstMonthOfSeason;
 
@@ -21,7 +21,7 @@ namespace ExtendLibrary.Tools
         #region Constructors
 
         /// <summary>
-        /// 静态构造函数
+        /// static constructor
         /// </summary>
         static DateTimeHandler()
         {
@@ -33,10 +33,10 @@ namespace ExtendLibrary.Tools
         #region Methods
 
         /// <summary>
-        /// 获取下一秒的时间
+        /// Get the datetime of next second
         /// </summary>
-        /// <param name="currentTime">当前时间</param>
-        /// <returns>返回下一秒的时间</returns>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next second</returns>
         public static DateTime GetNextSecond(DateTime currentTime)
         {
             DateTime nextSecond = currentTime.AddSeconds(1);
@@ -46,10 +46,10 @@ namespace ExtendLibrary.Tools
         }
 
         /// <summary>
-        /// 获取下一分钟的时间
+        /// Get the datetime of next minute
         /// </summary>
-        /// <param name="currentTime">当前时间</param>
-        /// <returns>返回下一分钟的时间</returns>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next minute</returns>
         public static DateTime GetNextMinute(DateTime currentTime)
         {
             DateTime nextMinute = currentTime.AddMinutes(1);
@@ -59,10 +59,10 @@ namespace ExtendLibrary.Tools
         }
 
         /// <summary>
-        /// 获取下一小时的时间
+        /// Get the datetime of next hour
         /// </summary>
-        /// <param name="currentTime">当前时间</param>
-        /// <returns>返回下一小时的时间</returns>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next hour</returns>
         public static DateTime GetNextHour(DateTime currentTime)
         {
             DateTime nextHour = currentTime.AddHours(1);
@@ -71,10 +71,22 @@ namespace ExtendLibrary.Tools
         }
 
         /// <summary>
-        /// 获取下一个星期一的日期
+        /// Get the datetime of next day
         /// </summary>
-        /// <param name="currentTime">当前时间</param>
-        /// <returns>返回下一个星期一的日期</returns>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next day</returns>
+        public static DateTime GetNextDay(DateTime currentTime)
+        {
+            DateTime nextHour = currentTime.AddDays(1);
+            DateTime result = new DateTime(nextHour.Year, nextHour.Month, nextHour.Day);
+            return result;
+        }
+
+        /// <summary>
+        /// Get the datetime of next week
+        /// </summary>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next week</returns>
         public static DateTime GetNextWeek(DateTime currentTime)
         {
             DateTime result = currentTime.Date;
@@ -84,10 +96,10 @@ namespace ExtendLibrary.Tools
         }
 
         /// <summary>
-        /// 获取下一个月一号的日期
+        /// Get the datetime of next month
         /// </summary>
-        /// <param name="currentTime">当前时间</param>
-        /// <returns>返回下一个月一号的日期</returns>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next month</returns>
         public static DateTime GetNextMonth(DateTime currentTime)
         {
             DateTime nextMonth = currentTime.AddMonths(1);
@@ -96,10 +108,10 @@ namespace ExtendLibrary.Tools
         }
 
         /// <summary>
-        /// 获取下一个季度第一天的日期
+        /// Get the datetime of next season
         /// </summary>
-        /// <param name="currentTime">当前时间</param>
-        /// <returns>返回下一个季度第一天的日期</returns>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next season</returns>
         public static DateTime GetNextSeason(DateTime currentTime)
         {
             DateTime nextSeason = currentTime.AddMonths(3);
@@ -108,10 +120,10 @@ namespace ExtendLibrary.Tools
         }
 
         /// <summary>
-        /// 获取下年第一天的日期
+        /// Get the datetime of next year
         /// </summary>
-        /// <param name="currentTime">当前时间</param>
-        /// <returns>返回下年第一天的日期</returns>
+        /// <param name="currentTime">current datetime</param>
+        /// <returns>Get the datetime of next year</returns>
         public static DateTime GetNextYear(DateTime currentTime)
         {
             DateTime result = new DateTime(currentTime.Year + 1, 1, 1);
