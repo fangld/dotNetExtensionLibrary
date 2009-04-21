@@ -5,35 +5,41 @@ using System.Text;
 namespace ExtendLibrary.DataStructures
 {
     /// <summary>
-    ///  最小堆
+    ///  Min heap data structure
     /// </summary>
-    /// <typeparam name="T">最小堆中元素的类型</typeparam>
+    /// <typeparam name="T">the type of item</typeparam>
     public class MinHeap<T>
     {
         #region Fields
 
         /// <summary>
-        /// 该堆包含的元素数量
+        /// the count of the items that minheap contains
         /// </summary>
         private int count;
 
         /// <summary>
-        /// 已分配的元素数量
+        /// the count of allocated
         /// </summary>
         private int capacity;
 
         /// <summary>
-        /// 用来交换的元素
+        /// item that use to swap
         /// </summary>
         private T swapValue;
 
         /// <summary>
-        /// 保存所有元素
+        /// the array of items
         /// </summary>
         private T[] array;
 
+        /// <summary>
+        /// comparsion
+        /// </summary>
         private readonly Comparison<T> comparison;
 
+        /// <summary>
+        /// comparer
+        /// </summary>
         private readonly IComparer<T> comparer;
 
         #endregion
@@ -41,7 +47,7 @@ namespace ExtendLibrary.DataStructures
         #region Properties
 
         /// <summary>
-        /// 访问该堆包含的元素个数
+        /// Get the count of the items that minheap contains
         /// </summary>
         public int Count
         {
@@ -53,12 +59,12 @@ namespace ExtendLibrary.DataStructures
         #region Constructors
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public MinHeap() : this(4) { }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="capacity">新最小堆最初可以存储的元素数</param>
         public MinHeap(int capacity)
@@ -69,9 +75,9 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
-        /// <param name="collection">一个集合，其元素被复制到新最小堆中</param>
+        /// <param name="collection">a collection that contains items</param>
         public MinHeap(IEnumerable<T> collection)
             :this(4)
         {
@@ -82,7 +88,7 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="comparison">比较元素时要使用的 Comparison</param>
         public MinHeap(Comparison<T> comparison)
@@ -92,7 +98,7 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="capacity">新最小堆最初可以存储的元素数</param>
         /// <param name="comparison">比较元素时要使用的 Comparison</param>
@@ -103,7 +109,7 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="collection">一个集合，其元素被复制到新最小堆中</param>
         /// <param name="comparison">比较元素时要使用的 Comparison</param>        
@@ -114,7 +120,7 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
         public MinHeap(IComparer<T> comparer)
@@ -123,7 +129,7 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="capacity">新最小堆最初可以存储的元素数</param>
         /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
@@ -134,7 +140,7 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="collection">一个集合，其元素被复制到新最小堆中</param>
         /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
@@ -149,9 +155,9 @@ namespace ExtendLibrary.DataStructures
         #region Methods
 
         /// <summary>
-        /// 建立堆
+        /// build the heap
         /// </summary>
-        public void BuildHead()
+        public void BuildHeap()
         {
             int position;
             for (position = (count - 1) >> 1; position >= 0; position--)
@@ -161,9 +167,9 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 增加元素
+        /// Add item
         /// </summary>
-        /// <param name="item">待增加的元素</param>
+        /// <param name="item">a item that is ready to add</param>
         public void Add(T item)
         {
             count++;
@@ -187,7 +193,19 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 使保存的元素的数量翻倍。
+        /// Add items
+        /// </summary>
+        /// <param name="collection">a colletion that contaions items</param>
+        public void Add(IEnumerable<T> collection)
+        {
+            foreach (T item in collection)
+            {
+                Add(item);
+            }
+        }
+
+        /// <summary>
+        /// Double the array
         /// </summary>
         private void DoubleArray()
         {
@@ -198,42 +216,63 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 复制数组
+        /// Copy array
         /// </summary>
-        /// <param name="source">待复制的数组</param>
-        /// <param name="destion">复制去的数组</param>
-        private static void CopyArray(T[] source, T[] destion)
+        /// <param name="source">source array</param>
+        /// <param name="destination">destination</param>
+        private static void CopyArray(T[] source, T[] destination)
         {
             int index;
             for (index = 0; index < source.Length; index++)
             {
-                destion[index] = source[index];
+                destination[index] = source[index];
             }
         }
 
         /// <summary>
-        /// 返回第一个元素,但是没有删除它
+        /// Return the first item
         /// </summary>
-        /// <returns>返回第一个元素,但是没有删除它</returns>
+        /// <returns>Return the first item</returns>
         public T Peek()
         {
             if (count == 0)
             {
-                throw new InvalidOperationException("堆为空。");
+                throw new InvalidOperationException("Minheap is empty!");
             }
 
             return array[0];
         }
 
         /// <summary>
-        /// 返回第一个元素,并删除它
+        /// Extract the top n items
         /// </summary>
-        /// <returns>返回第一个元素,并删除它</returns>
+        /// <param name="number">the number of items that is extracted</param>
+        /// <returns>return a list that contains the top n items</returns>
+        public IList<T> ExtractList(int number)
+        {
+            if (count < number)
+            {
+                string message = string.Format("Minheap contains no more than {0} items!", count);
+                throw new InvalidOperationException(message);
+            }
+            IList<T> result = new List<T>();
+            for (int i = 0; i < count; i++)
+            {
+                T item = ExtractFirst();
+                result.Add(item);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Extract the first item
+        /// </summary>
+        /// <returns>Return the first iem</returns>
         public T ExtractFirst()
         {
             if (count == 0)
             {
-                throw new InvalidOperationException("堆为空。");
+                throw new InvalidOperationException("Minheap is empty!");
             }
             T result = array[0];
             array[0] = array[count - 1];
@@ -270,32 +309,24 @@ namespace ExtendLibrary.DataStructures
         {
             do
             {
-                //左孩子的位置
                 int left = ((position << 1) + 1);
-
-                //右孩子的位置
                 int right = left + 1;
                 int minPosition;
 
-                //如果左孩子的位置小于元素个数并且左孩子节点比父亲节点大，最小元素的位置为左孩子
                 if (left < count && Compare(left, position) < 0)
                 {
                     minPosition = left;
                 }
-
-                //否则最大元素的位置为父亲
                 else
                 {
                     minPosition = position;
                 }
 
-                //如果右孩子的位置小于元素个数并且右孩子节点比父亲节点大，最小元素的位置为右孩子
                 if (right < count && Compare(right, minPosition) < 0)
                 {
                     minPosition = right;
                 }
 
-                //如果最大元素的位置不是父亲节点，则调整下一棵子树
                 if (minPosition != position)
                 {
                     T temp = array[position];
