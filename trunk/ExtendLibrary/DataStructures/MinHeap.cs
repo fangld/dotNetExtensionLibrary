@@ -23,11 +23,6 @@ namespace ExtendLibrary.DataStructures
         private int capacity;
 
         /// <summary>
-        /// item that use to swap
-        /// </summary>
-        private T swapValue;
-
-        /// <summary>
         /// the array of items
         /// </summary>
         private T[] array;
@@ -184,7 +179,7 @@ namespace ExtendLibrary.DataStructures
 
             while (position > 0 && Compare(parentPosition, position) > 0)
             {
-                swapValue = array[position];
+                T swapValue = array[position];
                 array[position] = array[parentPosition];
                 array[parentPosition] = swapValue;
                 position = parentPosition;
@@ -283,19 +278,26 @@ namespace ExtendLibrary.DataStructures
 
         private int Compare(int xIndex, int yIndex)
         {
+            T xItem = array[xIndex];
+            T yItem = array[yIndex];
+            if (xItem is IComparable<T>)
+            {
+                return ((IComparable<T>)xItem).CompareTo(yItem);
+            }
+
+            if (xItem is IComparable)
+            {
+                return ((IComparable)xItem).CompareTo(yItem);
+            }
+
             if (comparison != null)
             {
-                return comparison(array[xIndex], array[yIndex]);
+                return comparison(xItem, yItem);
             }
 
             if (comparer != null)
             {
-                return comparer.Compare(array[xIndex], array[yIndex]);
-            }
-
-            if (swapValue is IComparable<T>)
-            {
-                return ((IComparable<T>) array[xIndex]).CompareTo(array[yIndex]);
+                return comparer.Compare(xItem, yItem);
             }
 
             throw new InvalidOperationException("未能比较容器中的两个元素。");
@@ -329,9 +331,9 @@ namespace ExtendLibrary.DataStructures
 
                 if (minPosition != position)
                 {
-                    T temp = array[position];
+                    T swapValue = array[position];
                     array[position] = array[minPosition];
-                    array[minPosition] = temp;
+                    array[minPosition] = swapValue;
                     position = minPosition;
                 }
 
