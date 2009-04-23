@@ -36,6 +36,7 @@
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
     <Compile Include="DataStructures\MinHeap.cs" />
     <Compile Include="DataStructures\Range.cs" />
+    <Compile Include="DataStructures\UnionFindSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\DataTimeHandler.cs" />
   </ItemGroup>
