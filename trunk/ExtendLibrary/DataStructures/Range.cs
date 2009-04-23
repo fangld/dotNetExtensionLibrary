@@ -8,7 +8,7 @@ namespace ExtendLibrary.DataStructures
     /// 数值范围
     /// </summary>
     /// <typeparam name="T">数值类型</typeparam>
-    public class Range<T> : IEquatable<Range<T>>, IComparable<Range<T>>, IComparable where T : IComparable<T>
+    public class Range<T> : IEquatable<Range<T>>, IComparable<Range<T>>, IComparable
     {
         #region Fields
 
@@ -21,6 +21,16 @@ namespace ExtendLibrary.DataStructures
         /// 结束数值
         /// </summary>
         private T end;
+
+        /// <summary>
+        /// comparsion
+        /// </summary>
+        private readonly Comparison<T> comparison;
+
+        /// <summary>
+        /// comparer
+        /// </summary>
+        private readonly IComparer<T> comparer;
 
         /// <summary>
         /// 空数值范围
@@ -81,13 +91,38 @@ namespace ExtendLibrary.DataStructures
 
         #region Methods
 
+        private int Compare(T xItem, T yItem)
+        {
+            if (xItem is IComparable<T>)
+            {
+                return ((IComparable<T>)xItem).CompareTo(yItem);
+            }
+
+            if (xItem is IComparable)
+            {
+                return ((IComparable)xItem).CompareTo(yItem);
+            }
+
+            if (comparison != null)
+            {
+                return comparison(xItem, yItem);
+            }
+
+            if (comparer != null)
+            {
+                return comparer.Compare(xItem, yItem);
+            }
+
+            throw new InvalidOperationException("未能比较容器中的两个元素。");
+        }
+
         /// <summary>
         /// 是否无效数值范围
         /// </summary>
         /// <returns>返回是否无效数值范围</returns>
         public bool IsEmpty()
         {
-            return start.Equals(default(T)) || end.Equals(default(T)) ? true : start.CompareTo(End) < 0;
+            return start.Equals(default(T)) || end.Equals(default(T)) ? true : Compare(start, end) < 0;
         }
 
         /// <summary>
@@ -97,7 +132,7 @@ namespace ExtendLibrary.DataStructures
         /// <returns>返回是否包含该数值</returns>
         public bool Includes(T value)
         {
-            return value.CompareTo(start) >= 0 && value.CompareTo(end) <= 0;
+            return Compare(value, start) >= 0 && Compare(value, end) <= 0;
         }
 
         /// <summary>
@@ -171,11 +206,11 @@ namespace ExtendLibrary.DataStructures
 
         public void Union(Range<T> other)
         {
-            if (start.CompareTo(other.start) > 0)
+            if (Compare(start, other.start) > 0)
             {
                 start = other.start;
             }
-            if (end.CompareTo(other.end) < 0)
+            if (Compare(end, other.end) < 0)
             {
                 end = other.end;
             }
@@ -183,11 +218,11 @@ namespace ExtendLibrary.DataStructures
 
         public void Intersect(Range<T> other)
         {
-            if (start.CompareTo(other.start) < 0)
+            if (Compare(start, other.start) < 0)
             {
                 start = other.start;
             }
-            if (end.CompareTo(other.end) > 0)
+            if (Compare(end, other.end) > 0)
             {
                 end = other.end;
             }
@@ -246,7 +281,7 @@ namespace ExtendLibrary.DataStructures
 
         public bool Equals(Range<T> other)
         {
-            return start.CompareTo(other.start) == 0 && end.CompareTo(other.end) == 0;
+            return Compare(start, other.start) == 0 && Compare(end, other.end) == 0;
         }
 
         #endregion
@@ -255,8 +290,10 @@ namespace ExtendLibrary.DataStructures
 
         public int CompareTo(Range<T> other)
         {
-            if (!(other.start.Equals(default(T)) && other.end.Equals(default(T)) && start.Equals(default(T)) && end.Equals(default(T))))
-                return start.Equals(other.start) ? end.CompareTo(other.end) : start.CompareTo(other.start);
+            if (
+                !(other.start.Equals(default(T)) && other.end.Equals(default(T)) && start.Equals(default(T)) &&
+                  end.Equals(default(T))))
+                return start.Equals(other.start) ? Compare(end, other.end) : Compare(start, other.start);
             return 0;
         }
 
@@ -267,9 +304,7 @@ namespace ExtendLibrary.DataStructures
         public int CompareTo(object obj)
         {
             Range<T> other = (Range<T>)obj;
-            if (!(other.start.Equals(default(T)) && other.end.Equals(default(T)) && start.Equals(default(T)) && end.Equals(default(T))))
-                return start.Equals(other.start) ? end.CompareTo(other.end) : start.CompareTo(other.start);
-            return 0;
+            return CompareTo(other);
         }
 
         #endregion
