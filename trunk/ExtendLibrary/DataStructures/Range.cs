@@ -77,6 +77,30 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public Range()
+        { }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="comparer">comparer</param>
+        public Range(IComparer<T> comparer)
+        {
+            this.comparer = comparer;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="comparison">comparsion</param>
+        public Range(Comparison<T> comparison)
+        {
+            this.comparison = comparison;
+        }
+
+        /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="start">开始数值</param>
@@ -85,6 +109,30 @@ namespace ExtendLibrary.DataStructures
         {
             this.start = start;
             this.end = end;
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="start">开始数值</param>
+        /// <param name="end">结束数值</param>
+        /// <param name="comparer">comparer</param>
+        public Range(T start, T end, IComparer<T> comparer)
+            : this(start, end)
+        {
+            this.comparer = comparer;
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="start">开始数值</param>
+        /// <param name="end">结束数值</param>
+        /// <param name="comparison">comparison</param>
+        public Range(T start, T end, Comparison<T> comparison)
+            : this(start, end)
+        {
+            this.comparison = comparison;
         }
 
         #endregion
@@ -126,16 +174,6 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// 是否包含该数值
-        /// </summary>
-        /// <param name="value">数值</param>
-        /// <returns>返回是否包含该数值</returns>
-        public bool Includes(T value)
-        {
-            return Compare(value, start) >= 0 && Compare(value, end) <= 0;
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="end">结束数值</param>
@@ -163,6 +201,16 @@ namespace ExtendLibrary.DataStructures
         public bool Overlaps(Range<T> value)
         {
             return value.Includes(start) || value.Includes(end) || Includes(value);
+        }
+
+        /// <summary>
+        /// 是否包含该数值
+        /// </summary>
+        /// <param name="value">数值</param>
+        /// <returns>返回是否包含该数值</returns>
+        public bool Includes(T value)
+        {
+            return Compare(value, start) >= 0 && Compare(value, end) <= 0;
         }
 
         /// <summary>
@@ -257,6 +305,12 @@ namespace ExtendLibrary.DataStructures
             return start.GetHashCode() * 13 + end.GetHashCode() * 37;
         }
 
+        public override bool Equals(object obj)
+        {
+            Range<T> other = (Range<T>)obj;
+            return Equals(other);
+        }
+
         #endregion
 
         #region Overriden Operator
@@ -274,6 +328,78 @@ namespace ExtendLibrary.DataStructures
             result.Intersect(secondRange);
             return result;
         }
+
+        public static bool operator >(Range<T> firstRange, Range<T> secondRange)
+        {
+            return firstRange.Compare(firstRange.start, secondRange.end) > 0;
+        }
+
+        public static bool operator <(Range<T> firstRange, Range<T> secondRange)
+        {
+            return firstRange.Compare(firstRange.end, secondRange.start) < 0;
+        }
+
+        public static bool operator >=(Range<T> firstRange, Range<T> secondRange)
+        {
+            return firstRange.Compare(firstRange.start, secondRange.end) >= 0;
+        }
+
+        public static bool operator <=(Range<T> firstRange, Range<T> secondRange)
+        {
+            return firstRange.Compare(firstRange.end, secondRange.start) <= 0;
+        }
+
+        public static bool operator ==(Range<T> firstRange, Range<T> secondRange)
+        {
+            return firstRange.Equals(secondRange);
+        }
+
+        public static bool operator !=(Range<T> firstRange, Range<T> secondRange)
+        {
+            return !firstRange.Equals(secondRange);
+        }
+
+        public static bool operator >(Range<T> range, T value)
+        {
+            return range.Compare(range.start, value) > 0;
+        }
+
+        public static bool operator <(Range<T> range, T value)
+        {
+            return range.Compare(range.end, value) < 0;
+        }
+
+        public static bool operator >=(Range<T> range, T value)
+        {
+            return range.Compare(range.start, value) >= 0;
+        }
+
+        public static bool operator <=(Range<T> range, T value)
+        {
+            return range.Compare(range.end, value) <= 0;
+        }
+
+        public static bool operator >(T value, Range<T> range)
+        {
+            return range.Compare(value, range.end) > 0;
+        }
+
+        public static bool operator <(T value, Range<T> range)
+        {
+            return range.Compare(value, range.start) < 0;
+        }
+
+        public static bool operator >=(T value, Range<T> range)
+        {
+            return range.Compare(value, range.end) >= 0;
+        }
+
+        public static bool operator <=(T value, Range<T> range)
+        {
+            return range.Compare(value, range.start) <= 0;
+        }
+
+
 
         #endregion
 
