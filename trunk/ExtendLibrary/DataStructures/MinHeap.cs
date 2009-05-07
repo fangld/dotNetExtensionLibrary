@@ -8,7 +8,7 @@ namespace ExtendLibrary.DataStructures
     ///  Min heap data structure
     /// </summary>
     /// <typeparam name="T">the type of item</typeparam>
-    public class MinHeap<T>
+    public class MinHeap<T> : IEnumerable<T>
     {
         #region Fields
 
@@ -343,6 +343,24 @@ namespace ExtendLibrary.DataStructures
                 }
 
             } while (true);
+        }
+
+        #endregion
+
+        #region IEnumerable<T> 成员
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new MinHeapEnumerator<T>(array, count);
+        }
+
+        #endregion
+
+        #region IEnumerable 成员
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         #endregion
