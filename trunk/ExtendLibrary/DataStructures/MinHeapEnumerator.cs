@@ -11,12 +11,12 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// the count of the items that minheap contains
         /// </summary>
-        private int count;
+        private readonly int count;
 
         /// <summary>
         /// the array of items
         /// </summary>
-        private T[] array;
+        private readonly T[] array;
 
         /// <summary>
         /// the current position of the array
@@ -27,7 +27,7 @@ namespace ExtendLibrary.DataStructures
 
         internal MinHeapEnumerator(T[] array, int count)
         {
-            currentPosition = 0;
+            currentPosition = -1;
             this.array = array;
             this.count = count;
         }
@@ -36,7 +36,17 @@ namespace ExtendLibrary.DataStructures
 
         public T Current
         {
-            get { return array[currentPosition]; }
+            get
+            {
+                try
+                {
+                    return array[currentPosition];
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    throw new InvalidOperationException();
+                }
+            }
         }
 
         #endregion
@@ -64,7 +74,7 @@ namespace ExtendLibrary.DataStructures
 
         public void Reset()
         {
-            currentPosition = 0;
+            currentPosition = -1;
         }
 
         #endregion
