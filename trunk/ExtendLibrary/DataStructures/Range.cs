@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ExtendLibrary.DataStructures
 {
@@ -254,6 +253,11 @@ namespace ExtendLibrary.DataStructures
 
         public void Union(Range<T> other)
         {
+            if (!Overlaps(other))
+            {
+                throw new InvalidOperationException("They can't be unioned!");
+            }
+
             if (Compare(start, other.start) > 0)
             {
                 start = other.start;
@@ -266,6 +270,12 @@ namespace ExtendLibrary.DataStructures
 
         public void Intersect(Range<T> other)
         {
+            if (!Overlaps(other))
+            {
+                start = default(T);
+                end = default(T);
+            }
+
             if (Compare(start, other.start) < 0)
             {
                 start = other.start;
@@ -398,8 +408,6 @@ namespace ExtendLibrary.DataStructures
         {
             return range.Compare(value, range.start) <= 0;
         }
-
-
 
         #endregion
 
