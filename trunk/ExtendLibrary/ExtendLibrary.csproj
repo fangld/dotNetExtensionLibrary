@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
+    <Compile Include="DataStructures\MatrixGraph.cs" />
     <Compile Include="DataStructures\MinHeap.cs" />
     <Compile Include="DataStructures\MinHeapEnumerator.cs" />
     <Compile Include="DataStructures\Range.cs" />
