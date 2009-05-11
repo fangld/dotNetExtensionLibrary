@@ -87,18 +87,17 @@ namespace ExtendLibrary.DataStructures
             int yFather = FindSet(yIndex);
             if (xFather != yFather)
             {
-                if (rank[xFather] > rank[yFather])
+                if (rank[xFather] >= rank[yFather])
                 {
                     father[yFather] = xFather;
-
+                    if (rank[xFather] == rank[yFather])
+                    {
+                        rank[xFather]++;
+                    }
                 }
                 else
                 {
                     father[xFather] = yFather;
-                    if (rank[xFather] == rank[yFather])
-                    {
-                        rank[yFather]++;
-                    }
                 }
             }
         }
