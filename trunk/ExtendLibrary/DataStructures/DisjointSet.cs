@@ -52,10 +52,15 @@ namespace ExtendLibrary.DataStructures
         /// <returns></returns>
         public bool IsSame(int xIndex, int yIndex)
         {
-            return GetFather(xIndex) == GetFather(yIndex);
+            return FindSet(xIndex) == FindSet(yIndex);
         }
 
-        public int GetFather(int index)
+        /// <summary>
+        /// Find set with path compress 
+        /// </summary>
+        /// <param name="index">the index of item</param>
+        /// <returns>return which set contains the item</returns>
+        public int FindSet(int index)
         {
             int fatherIndex = index;
             while (father[fatherIndex] != fatherIndex)
@@ -71,10 +76,15 @@ namespace ExtendLibrary.DataStructures
             return index;
         }
 
+        /// <summary>
+        /// Union two set that contains xIndex and yIndex sperately
+        /// </summary>
+        /// <param name="xIndex">the index of first item</param>
+        /// <param name="yIndex">the index of second item</param>
         public void Union(int xIndex, int yIndex)
         {
-            int xFather = GetFather(xIndex);
-            int yFather = GetFather(yIndex);
+            int xFather = FindSet(xIndex);
+            int yFather = FindSet(yIndex);
             if (xFather != yFather)
             {
                 if (rank[xFather] > rank[yFather])
