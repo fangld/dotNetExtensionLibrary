@@ -8,7 +8,7 @@ namespace ExtendLibrary.DataStructures
     ///  Min heap data structure
     /// </summary>
     /// <typeparam name="T">the type of item</typeparam>
-    public class MinHeap<T> : IEnumerable<T>
+    public class BinaryHeap<T> : IEnumerable<T>
     {
         #region Fields
 
@@ -56,13 +56,13 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        public MinHeap() : this(4) { }
+        public BinaryHeap() : this(4) { }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="capacity">新最小堆最初可以存储的元素数</param>
-        public MinHeap(int capacity)
+        public BinaryHeap(int capacity)
         {
             count = 0;
             this.capacity = capacity;
@@ -73,7 +73,7 @@ namespace ExtendLibrary.DataStructures
         /// Constructor
         /// </summary>
         /// <param name="collection">a collection that contains items</param>
-        public MinHeap(IEnumerable<T> collection)
+        public BinaryHeap(IEnumerable<T> collection)
             :this(4)
         {
             foreach(T item in collection)
@@ -86,7 +86,7 @@ namespace ExtendLibrary.DataStructures
         /// Constructor
         /// </summary>
         /// <param name="comparison">比较元素时要使用的 Comparison</param>
-        public MinHeap(Comparison<T> comparison)
+        public BinaryHeap(Comparison<T> comparison)
             : this(4, comparison)
         {
 
@@ -97,7 +97,7 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="capacity">新最小堆最初可以存储的元素数</param>
         /// <param name="comparison">比较元素时要使用的 Comparison</param>
-        public MinHeap(int capacity, Comparison<T> comparison)
+        public BinaryHeap(int capacity, Comparison<T> comparison)
             :this(capacity)
         {
             this.comparison = comparison;
@@ -108,7 +108,7 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="collection">一个集合，其元素被复制到新最小堆中</param>
         /// <param name="comparison">比较元素时要使用的 Comparison</param>        
-        public MinHeap(IEnumerable<T> collection, Comparison<T> comparison)
+        public BinaryHeap(IEnumerable<T> collection, Comparison<T> comparison)
             : this(collection)
         {
             this.comparison = comparison;
@@ -118,7 +118,7 @@ namespace ExtendLibrary.DataStructures
         /// Constructor
         /// </summary>
         /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
-        public MinHeap(IComparer<T> comparer)
+        public BinaryHeap(IComparer<T> comparer)
             : this(4, comparer)
         {
         }
@@ -128,7 +128,7 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="capacity">新最小堆最初可以存储的元素数</param>
         /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
-        public MinHeap(int capacity, IComparer<T> comparer)
+        public BinaryHeap(int capacity, IComparer<T> comparer)
             : this(capacity)
         {
             this.comparer = comparer;
@@ -139,7 +139,7 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="collection">一个集合，其元素被复制到新最小堆中</param>
         /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
-        public MinHeap(IEnumerable<T> collection, IComparer<T> comparer)
+        public BinaryHeap(IEnumerable<T> collection, IComparer<T> comparer)
             : this(collection)
         {
             this.comparer = comparer;
@@ -327,7 +327,7 @@ namespace ExtendLibrary.DataStructures
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new MinHeapEnumerator<T>(array, count);
+            return new HeapEnumerator<T>(array);
         }
 
         #endregion
@@ -336,7 +336,7 @@ namespace ExtendLibrary.DataStructures
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return array.GetEnumerator();
         }
 
         #endregion

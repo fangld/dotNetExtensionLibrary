@@ -35,8 +35,8 @@
   <ItemGroup>
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
     <Compile Include="DataStructures\MatrixGraph.cs" />
-    <Compile Include="DataStructures\MinHeap.cs" />
-    <Compile Include="DataStructures\MinHeapEnumerator.cs" />
+    <Compile Include="DataStructures\BinaryHeap.cs" />
+    <Compile Include="DataStructures\HeapEnumerator.cs" />
     <Compile Include="DataStructures\Range.cs" />
     <Compile Include="DataStructures\DisjointSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
