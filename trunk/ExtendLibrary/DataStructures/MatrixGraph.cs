@@ -42,22 +42,19 @@ namespace ExtendLibrary.DataStructures
             for (int i = 0; i < count; i++)
             {
                 result[i] = new double[count];
-                for (int j = 0; j < count; j++)
-                {
-                    result[i][j] = matrix[i][j];
-                }
+                Buffer.BlockCopy(matrix[i], 0, result[i], 0, count);
             }
 
-            for (int i = 0; i < count; i++)
+            for (int k = 0; k < count; k++)
             {
-                for (int j = 0; j < count; j++)
+                for (int i = 0; i < count; i++)
                 {
-                    for (int k = 0; k < count; k++)
+                    for (int j = 0; j < count; j++)
                     {
-                        double newLength = result[j][i] + result[i][k];
-                        if (newLength < result[j][k])
+                        double newLength = result[i][k] + result[k][j];
+                        if (newLength < result[i][j])
                         {
-                            result[j][k] = newLength;
+                            result[i][j] = newLength;
                         }
                     }
                 }

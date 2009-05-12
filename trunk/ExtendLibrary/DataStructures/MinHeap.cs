@@ -170,7 +170,8 @@ namespace ExtendLibrary.DataStructures
             count++;
             if (count > capacity)
             {
-                DoubleArray();
+                capacity <<= 1;
+                Array.Resize(ref array, capacity);
             }
             array[count - 1] = item;
             int position = count - 1;
@@ -200,31 +201,6 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// Double the array
-        /// </summary>
-        private void DoubleArray()
-        {
-            capacity <<= 1;
-            T[] newArray = new T[capacity];
-            CopyArray(array, newArray);
-            array = newArray;
-        }
-
-        /// <summary>
-        /// Copy array
-        /// </summary>
-        /// <param name="source">source array</param>
-        /// <param name="destination">destination</param>
-        private static void CopyArray(T[] source, T[] destination)
-        {
-            int index;
-            for (index = 0; index < source.Length; index++)
-            {
-                destination[index] = source[index];
-            }
-        }
-
-        /// <summary>
         /// Return the first item
         /// </summary>
         /// <returns>Return the first item</returns>
@@ -250,8 +226,8 @@ namespace ExtendLibrary.DataStructures
                 string message = string.Format("Minheap contains no more than {0} items!", count);
                 throw new InvalidOperationException(message);
             }
-            IList<T> result = new List<T>();
-            for (int i = 0; i < count; i++)
+            IList<T> result = new List<T>(number);
+            for (int i = 0; i < number; i++)
             {
                 T item = ExtractFirst();
                 result.Add(item);
@@ -300,7 +276,7 @@ namespace ExtendLibrary.DataStructures
                 return comparer.Compare(xItem, yItem);
             }
 
-            throw new InvalidOperationException("未能比较容器中的两个元素。");
+            throw new InvalidOperationException("Can't compare two items.");
         }
 
         /// <summary>
