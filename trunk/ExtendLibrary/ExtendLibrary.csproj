@@ -34,6 +34,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
+    <Compile Include="Algorithms\Selection.cs" />
+    <Compile Include="Common\MultiComparer.cs" />
     <Compile Include="DataStructures\MatrixGraph.cs" />
     <Compile Include="DataStructures\BinaryHeap.cs" />
     <Compile Include="DataStructures\HeapEnumerator.cs" />

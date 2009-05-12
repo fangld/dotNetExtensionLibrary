@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ExtendLibrary.Common;
 
 namespace ExtendLibrary.DataStructures
 {
@@ -28,14 +29,9 @@ namespace ExtendLibrary.DataStructures
         private T[] array;
 
         /// <summary>
-        /// comparsion
-        /// </summary>
-        private readonly Comparison<T> comparison;
-
-        /// <summary>
         /// comparer
         /// </summary>
-        private readonly IComparer<T> comparer;
+        private readonly MultiComparer<T> comparer;
 
         #endregion
 
@@ -100,7 +96,7 @@ namespace ExtendLibrary.DataStructures
         public BinaryHeap(int capacity, Comparison<T> comparison)
             :this(capacity)
         {
-            this.comparison = comparison;
+            comparer = new MultiComparer<T>(comparison);
         }
 
         /// <summary>
@@ -111,7 +107,7 @@ namespace ExtendLibrary.DataStructures
         public BinaryHeap(IEnumerable<T> collection, Comparison<T> comparison)
             : this(collection)
         {
-            this.comparison = comparison;
+            comparer = new MultiComparer<T>(comparison);
         }
 
         /// <summary>
@@ -131,7 +127,7 @@ namespace ExtendLibrary.DataStructures
         public BinaryHeap(int capacity, IComparer<T> comparer)
             : this(capacity)
         {
-            this.comparer = comparer;
+            this.comparer = new MultiComparer<T>(comparer);
         }
 
         /// <summary>
@@ -142,7 +138,7 @@ namespace ExtendLibrary.DataStructures
         public BinaryHeap(IEnumerable<T> collection, IComparer<T> comparer)
             : this(collection)
         {
-            this.comparer = comparer;
+            this.comparer = new MultiComparer<T>(comparer);
         }
 
         #endregion
@@ -256,27 +252,7 @@ namespace ExtendLibrary.DataStructures
         {
             T xItem = array[xIndex];
             T yItem = array[yIndex];
-            if (xItem is IComparable<T>)
-            {
-                return ((IComparable<T>)xItem).CompareTo(yItem);
-            }
-
-            if (xItem is IComparable)
-            {
-                return ((IComparable)xItem).CompareTo(yItem);
-            }
-
-            if (comparison != null)
-            {
-                return comparison(xItem, yItem);
-            }
-
-            if (comparer != null)
-            {
-                return comparer.Compare(xItem, yItem);
-            }
-
-            throw new InvalidOperationException("Can't compare two items.");
+            return comparer.Compare(xItem, yItem);
         }
 
         /// <summary>
