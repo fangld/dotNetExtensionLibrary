@@ -54,7 +54,11 @@ namespace ExtendLibrary.DataStructures
                 {
                     for (int k = 0; k < count; k++)
                     {
-                        result[j][k] = Math.Min(result[j][k], result[j][i] + result[i][k]);
+                        double newLength = result[j][i] + result[i][k];
+                        if (newLength < result[j][k])
+                        {
+                            result[j][k] = newLength;
+                        }
                     }
                 }
             }
