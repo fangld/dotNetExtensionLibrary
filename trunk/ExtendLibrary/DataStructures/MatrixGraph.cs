@@ -25,14 +25,14 @@ namespace ExtendLibrary.DataStructures
             }
         }
 
-        //public T Dijkstra()
+        //public double[] Dijkstra()
         //{
-        //    MinHeap<int> heap = new MinHeap<int>();
+        //    BinaryHeap<int> heap = new BinaryHeap<int>();
         //    for (int i = 0; i < count; i++)
         //        heap.Add(i);
-        //    while(heap.Count != 0)
+        //    while (heap.Count != 0)
         //    {
-                
+
         //    }
         //}
 
@@ -45,16 +45,16 @@ namespace ExtendLibrary.DataStructures
                 Buffer.BlockCopy(matrix[i], 0, result[i], 0, count);
             }
 
-            for (int k = 0; k < count; k++)
+            for (int midIndex = 0; midIndex < count; midIndex++)
             {
-                for (int i = 0; i < count; i++)
+                for (int srcIndex = 0; srcIndex < count; srcIndex++)
                 {
-                    for (int j = 0; j < count; j++)
+                    for (int destIndex = 0; destIndex < count; destIndex++)
                     {
-                        double newLength = result[i][k] + result[k][j];
-                        if (newLength < result[i][j])
+                        double newLength = result[srcIndex][midIndex] + result[midIndex][destIndex];
+                        if (newLength < result[srcIndex][destIndex])
                         {
-                            result[i][j] = newLength;
+                            result[srcIndex][destIndex] = newLength;
                         }
                     }
                 }
