@@ -36,7 +36,6 @@ namespace ExtendLibrary.DataStructures
             for (int i = 0; i < father.Length; i++)
             {
                 father[i] = i;
-                rank[i] = 0;
             }
         }
 
