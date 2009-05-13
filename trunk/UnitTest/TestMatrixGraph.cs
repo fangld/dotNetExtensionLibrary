@@ -64,5 +64,29 @@ namespace UnitTest
             Assert.AreEqual(10, result[1]);
             Assert.AreEqual(0, result[2]);
         }
+
+        [Test]
+        public void Test()
+        {
+            Random ran = new Random();
+            MatrixGraph graph = new MatrixGraph(100, 101);
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    graph.SetUniEdge(i, j, ran.Next(100));
+                }
+                graph.SetUniEdge(i, i, 0);
+            }
+            double[][] floyd = graph.Floyd();
+            for (int i = 0; i < 100; i++)
+            {
+                double[] dijkstra = graph.Dijkstra(i);
+                for (int j = 0; j < 100; j++)
+                {
+                    Assert.AreEqual(floyd[i][j], dijkstra[j]);
+                }
+            }
+        }
     }
 }

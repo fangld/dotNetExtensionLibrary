@@ -19,8 +19,35 @@ namespace ExtendLibrary.DataStructures
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// the index of matrix grpah
+        /// </summary>
+        /// <param name="sourceIndex"></param>
+        /// <returns></returns>
+        public double[] this[int sourceIndex]
+        {
+            get { return matrix[sourceIndex]; }
+        }
+
+        /// <summary>
+        /// return the max distance of this grpah
+        /// </summary>
+        public double MaxDistance
+        {
+            get { return maxDistance; }
+        }
+
+        #endregion
+
         #region Constructor
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="count">the number of vertexs</param>
+        /// <param name="maxDistance">the max distance of this grpah</param>
         public MatrixGraph(int count, double maxDistance)
         {
             this.count = count;
@@ -35,6 +62,12 @@ namespace ExtendLibrary.DataStructures
                 }
                 matrix[i][i] = 0;
             }
+        }
+
+        internal MatrixGraph(double[][] matrix, double maxDistance)
+        {
+            this.matrix = matrix;
+            this.maxDistance = maxDistance;
         }
 
         #endregion
@@ -60,6 +93,10 @@ namespace ExtendLibrary.DataStructures
             while (heap.Count != 0)
             {
                 VertexNode minNode = heap.ExtractFirst();
+                if (minNode.Length > result[minNode.Index])
+                {
+                    continue;
+                }
                 for (int i = 0; i < count; i++)
                 {
                     if (matrix[minNode.Index][i] < maxDistance)
@@ -87,7 +124,7 @@ namespace ExtendLibrary.DataStructures
             for (int i = 0; i < count; i++)
             {
                 result[i] = new double[count];
-                Buffer.BlockCopy(matrix[i], 0, result[i], 0, count);
+                Array.Copy(matrix[i], result[i], count);
             }
 
             for (int midIndex = 0; midIndex < count; midIndex++)
@@ -105,6 +142,111 @@ namespace ExtendLibrary.DataStructures
                 }
             }
 
+            return result;
+        }
+
+        /// <summary>
+        /// Kruskal algorithm
+        /// </summary>
+        /// <returns>return the min span tree for this grpah</returns>
+        public MatrixGraph Kruskal()
+        {
+            double[][] result = GetNonEdgeGraph();
+            List<EdgeNode> edgeNodes = new List<EdgeNode>(count);
+
+            for (int i = 0; i < count; i++)
+            {
+                for (int j = 0; j < count; j++)
+                {
+                    double length = matrix[i][j];
+                    if (length != maxDistance)
+                    {
+                        EdgeNode edgeNode = new EdgeNode(i, j, length);
+                        edgeNodes.Add(edgeNode);
+                    }
+                }
+            }
+
+            edgeNodes.Sort();
+
+            int addEdgeNumber = 0;
+            DisjointSet set = new DisjointSet(count);
+            for (int i= 0; i < edgeNodes.Count; i++)
+            {
+                int sourceIndex = edgeNodes[i].SourceIndex;
+                int destinationIndex = edgeNodes[i].DestinationIndex;
+                if (!set.IsInSameSet(sourceIndex, destinationIndex))
+                {
+                    result[sourceIndex][destinationIndex] = edgeNodes[i].Length;
+                    set.Union(sourceIndex, destinationIndex);
+                    addEdgeNumber++;
+                }
+                if (addEdgeNumber == count)
+                {
+                    break;
+                }
+            }
+            if (addEdgeNumber != count)
+            {
+                throw new InvalidOperationException("The graph isn't connected!");
+            }
+            return new MatrixGraph(result, maxDistance);
+        }
+
+        public MatrixGraph Prim()
+        {
+            double[][] result = GetNonEdgeGraph();
+            bool[] isConnected = new bool[count];
+            int[] sourceArray = new int[count];
+            double[] weight = new double[count];
+            isConnected[0] = true;
+            for (int i = 1; i < count; i++)
+            {
+                weight[i] = matrix[0][i];
+                sourceArray[i] = 0;
+            }
+            for (int i = 1; i < count; i++)
+            {
+                int destinationIndex = 0;
+                double minDistance = maxDistance;
+                for (int j = 1; j < count; j++)
+                {
+                    if (!isConnected[j] && weight[j] < minDistance)
+                    {
+                        destinationIndex = j;
+                        minDistance = weight[j];
+                    }
+                }
+                if (destinationIndex == 0)
+                {
+                    throw new InvalidOperationException("The graph isn't connected!");
+                }
+                result[sourceArray[destinationIndex]][destinationIndex] = weight[destinationIndex];
+                isConnected[destinationIndex] = true;
+                for (int j = 1; j < count; j++)
+                {
+                    if (!isConnected[j] && matrix[destinationIndex][j] < weight[j])
+                    {
+                        weight[j] = matrix[destinationIndex][j];
+                        sourceArray[j] = destinationIndex;
+                    }
+                }
+            }
+            return new MatrixGraph(result, maxDistance);
+        }
+
+        private double[][] GetNonEdgeGraph()
+        {
+            double[][] result = new double[count][];
+            for (int i = 0; i < count; i++)
+            {
+                result[i] = new double[count];
+                for (int j = 0; j < count; j++)
+                {
+                    result[i][j] = maxDistance;
+                }
+                result[i][i] = 0;
+            }
             return result;
         }
 
@@ -138,6 +280,8 @@ namespace ExtendLibrary.DataStructures
             matrix[source][destination] = value;
             matrix[destination][source] = value;
         }
+
+
 
         #endregion
     }
