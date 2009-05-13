@@ -4,13 +4,22 @@ using System.Text;
 
 namespace ExtendLibrary.DataStructures
 {
+    /// <summary>
+    /// Matrix graph data structure
+    /// </summary>
     public class MatrixGraph
     {
+        #region Fields
+
         private int count;
 
         private double maxDistance;
 
         private double[][] matrix;
+
+        #endregion
+
+        #region Constructor
 
         public MatrixGraph(int count, double maxDistance)
         {
@@ -28,6 +37,15 @@ namespace ExtendLibrary.DataStructures
             }
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Dijkstra algorithm
+        /// </summary>
+        /// <param name="sourceIndex">the source index of vertex</param>
+        /// <returns>return the array that contains the minimal length from the source to all vertex</returns>
         public double[] Dijkstra(int sourceIndex)
         {
             double[] result = new double[count];
@@ -59,6 +77,10 @@ namespace ExtendLibrary.DataStructures
             return result;
         }
 
+        /// <summary>
+        /// Floyd algorithm
+        /// </summary>
+        /// <returns>return the matrix that contains the minimal length of all pair vertex</returns>
         public double[][] Floyd()
         {
             double[][] result = new double[count][];
@@ -86,9 +108,37 @@ namespace ExtendLibrary.DataStructures
             return result;
         }
 
-        public void SetEdge(int source, int destination, double value)
+        /// <summary>
+        /// Set unidirectional edge
+        /// </summary>
+        /// <param name="source">the source index of vertex</param>
+        /// <param name="destination">the destination index of vertex</param>
+        /// <param name="value">the value of the edge</param>
+        public void SetUniEdge(int source, int destination, double value)
         {
+            if (value > maxDistance)
+            {
+                throw new InvalidOperationException("The value can't be greater than the maxDistantce");
+            }
             matrix[source][destination] = value;
         }
+
+        /// <summary>
+        /// Set bidirectional edge
+        /// </summary>
+        /// <param name="source">the source index of vertex</param>
+        /// <param name="destination">the destination index of vertex</param>
+        /// <param name="value">the value of the edge</param>
+        public void SetBidEdge(int source, int destination, double value)
+        {
+            if (value > maxDistance)
+            {
+                throw new InvalidOperationException("The value can't be greater than the maxDistantce");
+            }
+            matrix[source][destination] = value;
+            matrix[destination][source] = value;
+        }
+
+        #endregion
     }
 }
