@@ -52,7 +52,10 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        public BinaryHeap() : this(4) { }
+        public BinaryHeap() : this(4)
+        {
+            comparer = new MultiComparer<T>();
+        }
 
         /// <summary>
         /// Constructor
@@ -85,7 +88,6 @@ namespace ExtendLibrary.DataStructures
         public BinaryHeap(Comparison<T> comparison)
             : this(4, comparison)
         {
-
         }
 
         /// <summary>
@@ -153,7 +155,7 @@ namespace ExtendLibrary.DataStructures
             int position;
             for (position = (count - 1) >> 1; position >= 0; position--)
             {
-                MinHeapify(position);
+                Heapify(position);
             }
         }
 
@@ -244,7 +246,7 @@ namespace ExtendLibrary.DataStructures
             T result = array[0];
             array[0] = array[count - 1];
             count--;
-            MinHeapify(0);
+            Heapify(0);
             return result;
         }
 
@@ -259,7 +261,7 @@ namespace ExtendLibrary.DataStructures
         /// 调整堆
         /// </summary>
         /// <param name="position">调整的位置</param>
-        private void MinHeapify(int position)
+        private void Heapify(int position)
         {
             do
             {

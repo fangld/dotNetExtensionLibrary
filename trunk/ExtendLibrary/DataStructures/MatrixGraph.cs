@@ -8,11 +8,14 @@ namespace ExtendLibrary.DataStructures
     {
         private int count;
 
+        private double maxDistance;
+
         private double[][] matrix;
 
         public MatrixGraph(int count, double maxDistance)
         {
             this.count = count;
+            this.maxDistance = maxDistance;
             matrix = new double[count][];
             for (int i = 0; i < count; i++)
             {
@@ -25,18 +28,38 @@ namespace ExtendLibrary.DataStructures
             }
         }
 
-        //public double[] Dijkstra()
-        //{
-        //    BinaryHeap<int> heap = new BinaryHeap<int>();
-        //    for (int i = 0; i < count; i++)
-        //        heap.Add(i);
-        //    while (heap.Count != 0)
-        //    {
+        public double[] Dijkstra(int sourceIndex)
+        {
+            double[] result = new double[count];
+            for (int i = 0; i < count; i++)
+            {
+                result[i] = maxDistance;
+            }
+            result[sourceIndex] = 0;
+            BinaryHeap<VertexNode> heap = new BinaryHeap<VertexNode>();
+            VertexNode sourceNode = new VertexNode(sourceIndex, 0);
+            heap.Add(sourceNode);
+            while (heap.Count != 0)
+            {
+                VertexNode minNode = heap.ExtractFirst();
+                for (int i = 0; i < count; i++)
+                {
+                    if (matrix[minNode.Index][i] < maxDistance)
+                    {
+                        double newLength = minNode.Length + matrix[minNode.Index][i];
+                        if (newLength < result[i])
+                        {
+                            result[i] = newLength;
+                            VertexNode addNode = new VertexNode(i, newLength);
+                            heap.Add(addNode);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
 
-        //    }
-        //}
-
-        public double[][] FloydWarshall()
+        public double[][] Floyd()
         {
             double[][] result = new double[count][];
             for (int i = 0; i < count; i++)
