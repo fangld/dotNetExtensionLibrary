@@ -9,7 +9,7 @@ namespace ExtendLibrary.DataStructures
     ///  Binary heap data structure
     /// </summary>
     /// <typeparam name="T">the type of item</typeparam>
-    public class BinaryHeap<T> : IEnumerable<T>
+    public class BinaryHeap<T> : IEnumerable<T>, IHeap<T>
     {
         #region Fields
 
@@ -147,6 +147,70 @@ namespace ExtendLibrary.DataStructures
 
         #region Methods
 
+
+
+        private int Compare(int xIndex, int yIndex)
+        {
+            T xItem = array[xIndex];
+            T yItem = array[yIndex];
+            return comparer.Compare(xItem, yItem);
+        }
+
+        /// <summary>
+        /// 调整堆
+        /// </summary>
+        /// <param name="position">调整的位置</param>
+        private void Heapify(int position)
+        {
+            do
+            {
+                int left = ((position << 1) + 1);
+                int right = left + 1;
+                int minPosition;
+
+                if (left < count && Compare(left, position) < 0)
+                {
+                    minPosition = left;
+                }
+                else
+                {
+                    minPosition = position;
+                }
+
+                if (right < count && Compare(right, minPosition) < 0)
+                {
+                    minPosition = right;
+                }
+
+                if (minPosition != position)
+                {
+                    T swapValue = array[position];
+                    array[position] = array[minPosition];
+                    array[minPosition] = swapValue;
+                    position = minPosition;
+                }
+
+                else
+                {
+                    return;
+                }
+
+            } while (true);
+        }
+
+        #endregion
+
+        #region IEnumerable<T> 成员
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new HeapEnumerator<T>(array);
+        }
+
+        #endregion
+
+        #region IHeap<T> 成员
+
         /// <summary>
         /// build the heap
         /// </summary>
@@ -221,7 +285,7 @@ namespace ExtendLibrary.DataStructures
         {
             if (count < number)
             {
-                string message = string.Format("Minheap contains no more than {0} items!", count);
+                string message = string.Format("Minheap contains less than {0} items!", number);
                 throw new InvalidOperationException(message);
             }
             IList<T> result = new List<T>(number);
@@ -248,64 +312,6 @@ namespace ExtendLibrary.DataStructures
             count--;
             Heapify(0);
             return result;
-        }
-
-        private int Compare(int xIndex, int yIndex)
-        {
-            T xItem = array[xIndex];
-            T yItem = array[yIndex];
-            return comparer.Compare(xItem, yItem);
-        }
-
-        /// <summary>
-        /// 调整堆
-        /// </summary>
-        /// <param name="position">调整的位置</param>
-        private void Heapify(int position)
-        {
-            do
-            {
-                int left = ((position << 1) + 1);
-                int right = left + 1;
-                int minPosition;
-
-                if (left < count && Compare(left, position) < 0)
-                {
-                    minPosition = left;
-                }
-                else
-                {
-                    minPosition = position;
-                }
-
-                if (right < count && Compare(right, minPosition) < 0)
-                {
-                    minPosition = right;
-                }
-
-                if (minPosition != position)
-                {
-                    T swapValue = array[position];
-                    array[position] = array[minPosition];
-                    array[minPosition] = swapValue;
-                    position = minPosition;
-                }
-
-                else
-                {
-                    return;
-                }
-
-            } while (true);
-        }
-
-        #endregion
-
-        #region IEnumerable<T> 成员
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new HeapEnumerator<T>(array);
         }
 
         #endregion
