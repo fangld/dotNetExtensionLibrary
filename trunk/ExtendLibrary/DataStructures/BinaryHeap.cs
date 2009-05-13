@@ -6,7 +6,7 @@ using ExtendLibrary.Common;
 namespace ExtendLibrary.DataStructures
 {
     /// <summary>
-    ///  Min heap data structure
+    ///  Binary heap data structure
     /// </summary>
     /// <typeparam name="T">the type of item</typeparam>
     public class BinaryHeap<T> : IEnumerable<T>
@@ -60,7 +60,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="capacity">新最小堆最初可以存储的元素数</param>
+        /// <param name="capacity">the capacity of stored items</param>
         public BinaryHeap(int capacity)
         {
             count = 0;
@@ -84,7 +84,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="comparison">比较元素时要使用的 Comparison</param>
+        /// <param name="comparison">comparison that used to compare items</param>
         public BinaryHeap(Comparison<T> comparison)
             : this(4, comparison)
         {
@@ -93,8 +93,8 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="capacity">新最小堆最初可以存储的元素数</param>
-        /// <param name="comparison">比较元素时要使用的 Comparison</param>
+        /// <param name="capacity">the capacity of stored items</param>
+        /// <param name="comparison">comparison that used to compare items</param>
         public BinaryHeap(int capacity, Comparison<T> comparison)
             :this(capacity)
         {
@@ -104,8 +104,8 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="collection">一个集合，其元素被复制到新最小堆中</param>
-        /// <param name="comparison">比较元素时要使用的 Comparison</param>        
+        /// <param name="collection">a collection that contains items</param>
+        /// <param name="comparison">comparison that used to compare items</param>        
         public BinaryHeap(IEnumerable<T> collection, Comparison<T> comparison)
             : this(collection)
         {
@@ -115,7 +115,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
+        /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public BinaryHeap(IComparer<T> comparer)
             : this(4, comparer)
         {
@@ -124,8 +124,8 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="capacity">新最小堆最初可以存储的元素数</param>
-        /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
+        /// <param name="capacity">the capacity of stored items</param>
+        /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public BinaryHeap(int capacity, IComparer<T> comparer)
             : this(capacity)
         {
@@ -135,8 +135,8 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="collection">一个集合，其元素被复制到新最小堆中</param>
-        /// <param name="comparer">比较元素时使用的 IComparer 泛型接口实现</param>
+        /// <param name="collection">a collection that contains items</param>
+        /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public BinaryHeap(IEnumerable<T> collection, IComparer<T> comparer)
             : this(collection)
         {

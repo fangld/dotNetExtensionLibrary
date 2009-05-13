@@ -49,7 +49,7 @@ namespace ExtendLibrary.DataStructures
         /// <param name="xIndex">the first index of item</param>
         /// <param name="yIndex">the second index </param>
         /// <returns></returns>
-        public bool IsSame(int xIndex, int yIndex)
+        public bool IsInSameSet(int xIndex, int yIndex)
         {
             return FindSet(xIndex) == FindSet(yIndex);
         }

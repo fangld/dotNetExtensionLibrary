@@ -17,7 +17,7 @@ namespace UnitTest
             Assert.AreEqual(1, set.FindSet(1));
             Assert.AreEqual(2, set.FindSet(2));
             Assert.AreEqual(3, set.FindSet(3));
-            Assert.IsFalse(set.IsSame(0, 1));
+            Assert.IsFalse(set.IsInSameSet(0, 1));
             Assert.AreEqual(0, set.FindSet(0));
             Assert.AreEqual(1, set.FindSet(1));
             Assert.AreEqual(2, set.FindSet(2));
