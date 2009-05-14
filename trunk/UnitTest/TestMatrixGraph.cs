@@ -84,6 +84,10 @@ namespace UnitTest
                 double[] dijkstra = graph.Dijkstra(i);
                 for (int j = 0; j < 100; j++)
                 {
+                    if (floyd[i][j] != dijkstra[j])
+                    {
+                        Console.WriteLine("i:{0} j:{1} floyd:{2} dijkstra:{3}", i, j, floyd[i][j], dijkstra[j]);
+                    }
                     Assert.AreEqual(floyd[i][j], dijkstra[j]);
                 }
             }

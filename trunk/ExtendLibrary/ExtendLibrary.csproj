@@ -36,6 +36,8 @@
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
     <Compile Include="Algorithms\Selection.cs" />
     <Compile Include="Common\MultiComparer.cs" />
+    <Compile Include="DataStructures\AdjEdgeNode.cs" />
+    <Compile Include="DataStructures\AdjListGraph.cs" />
     <Compile Include="DataStructures\EdgeNode.cs" />
     <Compile Include="DataStructures\FibonacciHeap.cs" />
     <Compile Include="DataStructures\IHeap.cs" />
@@ -44,6 +46,7 @@
     <Compile Include="DataStructures\HeapEnumerator.cs" />
     <Compile Include="DataStructures\Range.cs" />
     <Compile Include="DataStructures\DisjointSet.cs" />
+    <Compile Include="DataStructures\SourceVertexNode.cs" />
     <Compile Include="DataStructures\VertexNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\DataTimeHandler.cs" />
