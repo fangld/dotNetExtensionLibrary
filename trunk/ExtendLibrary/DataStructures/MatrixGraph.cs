@@ -97,6 +97,10 @@ namespace ExtendLibrary.DataStructures
             while (heap.Count != 0)
             {
                 VertexNode minNode = heap.ExtractFirst();
+                if (minNode.Length == maxDistance)
+                {
+                    break;
+                }
                 for (int i = 0; i < count; i++)
                 {
                     if (matrix[minNode.Index][i] < maxDistance)

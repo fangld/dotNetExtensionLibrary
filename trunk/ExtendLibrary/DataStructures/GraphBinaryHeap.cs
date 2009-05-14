@@ -25,7 +25,7 @@ namespace ExtendLibrary.DataStructures
 
         public new void Add(VertexNode item)
         {
-            indexArray[Count] = Count;
+            indexArray[item.Index] = Count;
             base.Add(item);
         }
 
