@@ -41,5 +41,7 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <returns>Return the first iem</returns>
         T ExtractFirst();
+
+        void DecreaseKey(int i, T value);
     }
 }

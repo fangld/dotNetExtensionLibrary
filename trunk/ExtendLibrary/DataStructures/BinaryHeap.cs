@@ -242,9 +242,9 @@ namespace ExtendLibrary.DataStructures
 
             while (position > 0 && Compare(parentPosition, position) > 0)
             {
-                T swapValue = array[position];
+                T exchange = array[position];
                 array[position] = array[parentPosition];
-                array[parentPosition] = swapValue;
+                array[parentPosition] = exchange;
                 position = parentPosition;
                 parentPosition = ((position - 1) >> 1);
             }
@@ -312,6 +312,14 @@ namespace ExtendLibrary.DataStructures
             count--;
             Heapify(0);
             return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void DecreaseKey(int i, T value)
+        {
+            
         }
 
         #endregion

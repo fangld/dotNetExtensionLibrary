@@ -193,6 +193,10 @@ namespace ExtendLibrary.DataStructures
             return new MatrixGraph(result, maxDistance);
         }
 
+        /// <summary>
+        /// Prim algorithm
+        /// </summary>
+        /// <returns>return the min span tree for this grpah</returns>
         public MatrixGraph Prim()
         {
             double[][] result = GetNonEdgeGraph();
@@ -253,35 +257,33 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Set unidirectional edge
         /// </summary>
-        /// <param name="source">the source index of vertex</param>
-        /// <param name="destination">the destination index of vertex</param>
+        /// <param name="srcIndex">the source index of vertex</param>
+        /// <param name="destIndex">the destination index of vertex</param>
         /// <param name="value">the value of the edge</param>
-        public void SetUniEdge(int source, int destination, double value)
+        public void SetUniEdge(int srcIndex, int destIndex, double value)
         {
             if (value > maxDistance)
             {
                 throw new InvalidOperationException("The value can't be greater than the maxDistantce");
             }
-            matrix[source][destination] = value;
+            matrix[srcIndex][destIndex] = value;
         }
 
         /// <summary>
         /// Set bidirectional edge
         /// </summary>
-        /// <param name="source">the source index of vertex</param>
-        /// <param name="destination">the destination index of vertex</param>
+        /// <param name="srcIndex">the source index of vertex</param>
+        /// <param name="destIndex">the destination index of vertex</param>
         /// <param name="value">the value of the edge</param>
-        public void SetBidEdge(int source, int destination, double value)
+        public void SetBidEdge(int srcIndex, int destIndex, double value)
         {
             if (value > maxDistance)
             {
                 throw new InvalidOperationException("The value can't be greater than the maxDistantce");
             }
-            matrix[source][destination] = value;
-            matrix[destination][source] = value;
+            matrix[srcIndex][destIndex] = value;
+            matrix[destIndex][srcIndex] = value;
         }
-
-
 
         #endregion
     }
