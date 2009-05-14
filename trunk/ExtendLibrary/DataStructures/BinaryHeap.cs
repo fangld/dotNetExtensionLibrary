@@ -26,7 +26,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// the array of items
         /// </summary>
-        private T[] array;
+        private T[] collection;
 
         /// <summary>
         /// comparer
@@ -43,6 +43,11 @@ namespace ExtendLibrary.DataStructures
         public int Count
         {
             get { return count; }
+        }
+
+        protected internal T[] Collection
+        {
+            get { return collection; }
         }
 
         #endregion
@@ -65,7 +70,8 @@ namespace ExtendLibrary.DataStructures
         {
             count = 0;
             this.capacity = capacity;
-            array = new T[capacity];
+            collection = new T[capacity];
+            comparer = new MultiComparer<T>();
         }
 
         /// <summary>
@@ -147,47 +153,34 @@ namespace ExtendLibrary.DataStructures
 
         #region Methods
 
-
-
         private int Compare(int xIndex, int yIndex)
         {
-            T xItem = array[xIndex];
-            T yItem = array[yIndex];
+            T xItem = collection[xIndex];
+            T yItem = collection[yIndex];
             return comparer.Compare(xItem, yItem);
         }
 
         /// <summary>
         /// 调整堆
         /// </summary>
-        /// <param name="position">调整的位置</param>
-        private void Heapify(int position)
+        /// <param name="index">调整的位置</param>
+        private void Heapify(int index)
         {
             do
             {
-                int left = ((position << 1) + 1);
-                int right = left + 1;
-                int minPosition;
+                int leftIndex = ((index << 1) + 1);
+                int rightIndex = leftIndex + 1;
+                int minIndex = (leftIndex < count && Compare(leftIndex, index) < 0) ? leftIndex : index;
 
-                if (left < count && Compare(left, position) < 0)
+                if (rightIndex < count && Compare(rightIndex, minIndex) < 0)
                 {
-                    minPosition = left;
-                }
-                else
-                {
-                    minPosition = position;
+                    minIndex = rightIndex;
                 }
 
-                if (right < count && Compare(right, minPosition) < 0)
+                if (minIndex != index)
                 {
-                    minPosition = right;
-                }
-
-                if (minPosition != position)
-                {
-                    T swapValue = array[position];
-                    array[position] = array[minPosition];
-                    array[minPosition] = swapValue;
-                    position = minPosition;
+                    Exchange(index, minIndex);
+                    index = minIndex;
                 }
 
                 else
@@ -198,13 +191,37 @@ namespace ExtendLibrary.DataStructures
             } while (true);
         }
 
+        private void ShiftUp(int index)
+        {
+            int parentPosition = ((index - 1) >> 1);
+
+            while (index > 0 && Compare(parentPosition, index) > 0)
+            {
+                Exchange(index, parentPosition);
+                index = parentPosition;
+                parentPosition = ((index - 1) >> 1);
+            }
+        }
+
+        /// <summary>
+        /// Exchange the item of xIndex and the item of yIndex
+        /// </summary>
+        /// <param name="xIndex">the index of first item</param>
+        /// <param name="yIndex">the index of second item</param>
+        protected virtual void Exchange(int xIndex, int yIndex)
+        {
+            T exchange = collection[xIndex];
+            collection[xIndex] = collection[yIndex];
+            collection[yIndex] = exchange;
+        }
+
         #endregion
 
         #region IEnumerable<T> 成员
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new HeapEnumerator<T>(array);
+            return new HeapEnumerator<T>(collection);
         }
 
         #endregion
@@ -227,27 +244,16 @@ namespace ExtendLibrary.DataStructures
         /// Add item
         /// </summary>
         /// <param name="item">a item that is ready to add</param>
-        public void Add(T item)
+        public virtual void Add(T item)
         {
             count++;
             if (count > capacity)
             {
                 capacity <<= 1;
-                Array.Resize(ref array, capacity);
+                Array.Resize(ref collection, capacity);
             }
-            array[count - 1] = item;
-            int position = count - 1;
-
-            int parentPosition = ((position - 1) >> 1);
-
-            while (position > 0 && Compare(parentPosition, position) > 0)
-            {
-                T exchange = array[position];
-                array[position] = array[parentPosition];
-                array[parentPosition] = exchange;
-                position = parentPosition;
-                parentPosition = ((position - 1) >> 1);
-            }
+            collection[count - 1] = item;
+            ShiftUp(count - 1);
         }
 
         /// <summary>
@@ -273,7 +279,7 @@ namespace ExtendLibrary.DataStructures
                 throw new InvalidOperationException("Minheap is empty!");
             }
 
-            return array[0];
+            return collection[0];
         }
 
         /// <summary>
@@ -307,8 +313,8 @@ namespace ExtendLibrary.DataStructures
             {
                 throw new InvalidOperationException("Minheap is empty!");
             }
-            T result = array[0];
-            array[0] = array[count - 1];
+            T result = collection[0];
+            collection[0] = collection[count - 1];
             count--;
             Heapify(0);
             return result;
@@ -317,9 +323,15 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// 
         /// </summary>
-        public void DecreaseKey(int i, T value)
+        public void DecreaseKey(int index, T value)
         {
-            
+            if (comparer.Compare(collection[index], value) < 0)
+            {
+                string message = string.Format("Value {0} is greater than array[{1}]", value, index);
+                throw new InvalidOperationException(message);
+            }
+            collection[index] = value;
+            ShiftUp(index);
         }
 
         #endregion
@@ -328,7 +340,7 @@ namespace ExtendLibrary.DataStructures
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return array.GetEnumerator();
+            return collection.GetEnumerator();
         }
 
         #endregion

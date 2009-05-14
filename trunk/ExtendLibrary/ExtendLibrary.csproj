@@ -40,6 +40,7 @@
     <Compile Include="DataStructures\AdjListGraph.cs" />
     <Compile Include="DataStructures\EdgeNode.cs" />
     <Compile Include="DataStructures\FibonacciHeap.cs" />
+    <Compile Include="DataStructures\GraphBinaryHeap.cs" />
     <Compile Include="DataStructures\IHeap.cs" />
     <Compile Include="DataStructures\MatrixGraph.cs" />
     <Compile Include="DataStructures\BinaryHeap.cs" />
