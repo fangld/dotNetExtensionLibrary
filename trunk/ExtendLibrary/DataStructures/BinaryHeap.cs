@@ -244,7 +244,7 @@ namespace ExtendLibrary.DataStructures
         /// Add item
         /// </summary>
         /// <param name="item">a item that is ready to add</param>
-        public virtual void Add(T item)
+        public void Add(T item)
         {
             count++;
             if (count > capacity)

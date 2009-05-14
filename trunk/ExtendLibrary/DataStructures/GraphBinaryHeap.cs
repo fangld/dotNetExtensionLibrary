@@ -23,7 +23,7 @@ namespace ExtendLibrary.DataStructures
 
         #region Methods
 
-        public void Add(VertexNode item)
+        public new void Add(VertexNode item)
         {
             indexArray[Count] = Count;
             base.Add(item);
