@@ -43,5 +43,7 @@ namespace ExtendLibrary.DataStructures
         T ExtractFirst();
 
         void DecreaseKey(int i, T value);
+
+        int Count { get;}
     }
 }

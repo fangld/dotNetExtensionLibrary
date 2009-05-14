@@ -87,16 +87,16 @@ namespace ExtendLibrary.DataStructures
                 result[i] = maxDistance;
             }
             result[sourceIndex] = 0;
-            BinaryHeap<VertexNode> heap = new BinaryHeap<VertexNode>();
-            VertexNode sourceNode = new VertexNode(sourceIndex, 0);
-            heap.Add(sourceNode);
+            GraphBinaryHeap heap = new GraphBinaryHeap(count);
+            for (int i  = 0; i < count; i++)
+            {
+                VertexNode vertexNode = new VertexNode(i, maxDistance);
+                heap.Add(vertexNode);
+            }
+            heap.ModifyVertexNode(sourceIndex, 0);
             while (heap.Count != 0)
             {
                 VertexNode minNode = heap.ExtractFirst();
-                if (minNode.Length > result[minNode.Index])
-                {
-                    continue;
-                }
                 for (int i = 0; i < count; i++)
                 {
                     if (matrix[minNode.Index][i] < maxDistance)
@@ -105,8 +105,7 @@ namespace ExtendLibrary.DataStructures
                         if (newLength < result[i])
                         {
                             result[i] = newLength;
-                            VertexNode addNode = new VertexNode(i, newLength);
-                            heap.Add(addNode);
+                            heap.ModifyVertexNode(i, newLength);
                         }
                     }
                 }
