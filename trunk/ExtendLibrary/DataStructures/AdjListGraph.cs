@@ -40,8 +40,9 @@ namespace ExtendLibrary.DataStructures
         /// Dijkstra algorithm
         /// </summary>
         /// <param name="sourceIndex">the source index of vertex</param>
+        /// <param name="heap">the heap tha support priority queue</param>        
         /// <returns>return the array that contains the minimal length from the source to all vertex</returns>
-        public double[] Dijkstra(int sourceIndex)
+        public double[] Dijkstra(int sourceIndex, Heap<VertexNode> heap)
         {
             double[] result = new double[count];
             for (int i = 0; i < count; i++)
@@ -49,17 +50,17 @@ namespace ExtendLibrary.DataStructures
                 result[i] = maxDistance;
             }
             result[sourceIndex] = 0;
-            GraphPriorityQueue heap = new GraphPriorityQueue(count, new BinaryHeap<VertexNode>(count));
+            GraphPriorityQueue queue = new GraphPriorityQueue(count, new BinaryHeap<VertexNode>(count));
             VertexNode[] vertexNodeArray = new VertexNode[count];
             for (int i = 0; i < count; i++)
             {
                 vertexNodeArray[i] = new VertexNode(i, maxDistance);
             }
-            heap.BuildHeap(vertexNodeArray);
-            heap.ModifyVertexNode(sourceIndex, 0);
-            while (heap.Count != 0)
+            queue.BuildHeap(vertexNodeArray);
+            queue.ModifyVertexNode(sourceIndex, 0);
+            while (queue.Count != 0)
             {
-                VertexNode minNode = heap.ExtractMin();
+                VertexNode minNode = queue.ExtractMin();
                 if (minNode.Length == maxDistance)
                 {
                     break;
@@ -73,44 +74,13 @@ namespace ExtendLibrary.DataStructures
                         if (newLength < result[edgeNode.Index])
                         {
                             result[edgeNode.Index] = newLength;
-                            heap.ModifyVertexNode(edgeNode.Index, newLength);
+                            queue.ModifyVertexNode(edgeNode.Index, newLength);
                         }
                     }
                 }
             }
             return result;
         }
-
-        ///// <summary>
-        ///// Floyd algorithm
-        ///// </summary>
-        ///// <returns>return the matrix that contains the minimal length of all pair vertex</returns>
-        //public double[][] Floyd()
-        //{
-        //    double[][] result = new double[count][];
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        result[i] = new double[count];
-        //        Array.Copy(matrix[i], result[i], count);
-        //    }
-
-        //    for (int midIndex = 0; midIndex < count; midIndex++)
-        //    {
-        //        for (int srcIndex = 0; srcIndex < count; srcIndex++)
-        //        {
-        //            for (int destIndex = 0; destIndex < count; destIndex++)
-        //            {
-        //                double newLength = result[srcIndex][midIndex] + result[midIndex][destIndex];
-        //                if (newLength < result[srcIndex][destIndex])
-        //                {
-        //                    result[srcIndex][destIndex] = newLength;
-        //                }
-        //            }
-        //        }
-        //    }
-
-        //    return result;
-        //}
 
         ///// <summary>
         ///// Kruskal algorithm
