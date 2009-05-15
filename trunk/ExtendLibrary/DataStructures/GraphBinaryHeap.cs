@@ -17,29 +17,27 @@ namespace ExtendLibrary.DataStructures
         public GraphBinaryHeap(int capacity)
         {
             indexArray = new int[capacity];
+            for (int i = 0; i < capacity; i++)
+            {
+                indexArray[i] = i;
+            }
         }
 
         #endregion
 
         #region Methods
 
-        public new void Add(VertexNode item)
-        {
-            indexArray[item.Index] = Count;
-            base.Add(item);
-        }
-
         protected override void Exchange(int xIndex, int yIndex)
         {
-            indexArray[Collection[xIndex].Index] = yIndex;
-            indexArray[Collection[yIndex].Index] = xIndex;
+            indexArray[ItemArray[xIndex].Index] = yIndex;
+            indexArray[ItemArray[yIndex].Index] = xIndex;
             base.Exchange(xIndex, yIndex);
         }
 
         public void ModifyVertexNode(int index, double length)
         {
             int collectionIndex = indexArray[index];
-            VertexNode vertexNode = Collection[collectionIndex];
+            VertexNode vertexNode = ItemArray[collectionIndex];
             vertexNode.Length = length;
             DecreaseKey(collectionIndex, vertexNode);
         }

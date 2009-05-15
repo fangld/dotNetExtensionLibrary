@@ -9,7 +9,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// build the heap
         /// </summary>
-        void BuildHeap();
+        void BuildHeap(IEnumerable<T> collection);
 
         /// <summary>
         /// Add item

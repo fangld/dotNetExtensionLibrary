@@ -26,7 +26,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// the array of items
         /// </summary>
-        private T[] collection;
+        private T[] itemArray;
 
         /// <summary>
         /// comparer
@@ -45,9 +45,9 @@ namespace ExtendLibrary.DataStructures
             get { return count; }
         }
 
-        protected internal T[] Collection
+        protected internal T[] ItemArray
         {
-            get { return collection; }
+            get { return itemArray; }
         }
 
         #endregion
@@ -70,21 +70,18 @@ namespace ExtendLibrary.DataStructures
         {
             count = 0;
             this.capacity = capacity;
-            collection = new T[capacity];
+            itemArray = new T[capacity];
             comparer = new MultiComparer<T>();
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="collection">a collection that contains items</param>
+        /// <param name="collection">a itemArray that contains items</param>
         public BinaryHeap(IEnumerable<T> collection)
-            :this(4)
         {
-            foreach(T item in collection)
-            {
-                Add(item);
-            }
+            BuildHeap(collection);
+            comparer = new MultiComparer<T>();
         }
 
         /// <summary>
@@ -110,7 +107,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="collection">a collection that contains items</param>
+        /// <param name="collection">a itemArray that contains items</param>
         /// <param name="comparison">comparison that used to compare items</param>        
         public BinaryHeap(IEnumerable<T> collection, Comparison<T> comparison)
             : this(collection)
@@ -141,7 +138,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="collection">a collection that contains items</param>
+        /// <param name="collection">a itemArray that contains items</param>
         /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public BinaryHeap(IEnumerable<T> collection, IComparer<T> comparer)
             : this(collection)
@@ -155,8 +152,8 @@ namespace ExtendLibrary.DataStructures
 
         private int Compare(int xIndex, int yIndex)
         {
-            T xItem = collection[xIndex];
-            T yItem = collection[yIndex];
+            T xItem = itemArray[xIndex];
+            T yItem = itemArray[yIndex];
             return comparer.Compare(xItem, yItem);
         }
 
@@ -210,9 +207,9 @@ namespace ExtendLibrary.DataStructures
         /// <param name="yIndex">the index of second item</param>
         protected virtual void Exchange(int xIndex, int yIndex)
         {
-            T exchange = collection[xIndex];
-            collection[xIndex] = collection[yIndex];
-            collection[yIndex] = exchange;
+            T exchange = itemArray[xIndex];
+            itemArray[xIndex] = itemArray[yIndex];
+            itemArray[yIndex] = exchange;
         }
 
         #endregion
@@ -221,7 +218,7 @@ namespace ExtendLibrary.DataStructures
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new HeapEnumerator<T>(collection);
+            return new HeapEnumerator<T>(itemArray);
         }
 
         #endregion
@@ -231,12 +228,26 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// build the heap
         /// </summary>
-        public void BuildHeap()
+        public void BuildHeap(IEnumerable<T> collection)
         {
-            int position;
-            for (position = (count - 1) >> 1; position >= 0; position--)
+            count = 0;
+            foreach (T item in collection)
             {
-                Heapify(position);
+                count++;
+            }
+            capacity = count;
+            itemArray = new T[count];
+
+            int index = 0;
+            foreach (T item in collection)
+            {
+                itemArray[index] = item;
+                index++;
+            }
+
+            for (index = (count - 1) >> 1; index >= 0; index--)
+            {
+                Heapify(index);
             }
         }
 
@@ -250,9 +261,9 @@ namespace ExtendLibrary.DataStructures
             if (count > capacity)
             {
                 capacity <<= 1;
-                Array.Resize(ref collection, capacity);
+                Array.Resize(ref itemArray, capacity);
             }
-            collection[count - 1] = item;
+            itemArray[count - 1] = item;
             ShiftUp(count - 1);
         }
 
@@ -279,7 +290,7 @@ namespace ExtendLibrary.DataStructures
                 throw new InvalidOperationException("Minheap is empty!");
             }
 
-            return collection[0];
+            return itemArray[0];
         }
 
         /// <summary>
@@ -313,8 +324,8 @@ namespace ExtendLibrary.DataStructures
             {
                 throw new InvalidOperationException("Minheap is empty!");
             }
-            T result = collection[0];
-            collection[0] = collection[count - 1];
+            T result = itemArray[0];
+            itemArray[0] = itemArray[count - 1];
             count--;
             Heapify(0);
             return result;
@@ -325,12 +336,12 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         public void DecreaseKey(int index, T value)
         {
-            if (comparer.Compare(collection[index], value) < 0)
+            if (comparer.Compare(itemArray[index], value) < 0)
             {
                 string message = string.Format("Value {0} is greater than array[{1}]", value, index);
                 throw new InvalidOperationException(message);
             }
-            collection[index] = value;
+            itemArray[index] = value;
             ShiftUp(index);
         }
 
@@ -340,7 +351,7 @@ namespace ExtendLibrary.DataStructures
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return collection.GetEnumerator();
+            return itemArray.GetEnumerator();
         }
 
         #endregion
