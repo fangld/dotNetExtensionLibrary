@@ -81,23 +81,34 @@ namespace ExtendLibrary.DataStructures
         /// <returns>return the array that contains the minimal length from the source to all vertex</returns>
         public double[] Dijkstra(int sourceIndex)
         {
+            return Dijkstra(sourceIndex, new BinaryHeap<VertexNode>());
+        }
+
+        /// <summary>
+        /// Dijkstra algorithm
+        /// </summary>
+        /// <param name="sourceIndex">the source index of vertex</param>
+        /// <param name="heap">the heap tha support priority queue</param>
+        /// <returns>return the array that contains the minimal length from the source to all vertex</returns>
+        public double[] Dijkstra(int sourceIndex, Heap<VertexNode> heap)
+        {
             double[] result = new double[count];
             for (int i = 0; i < count; i++)
             {
                 result[i] = maxDistance;
             }
             result[sourceIndex] = 0;
-            GraphPriorityQueue heap = new GraphPriorityQueue(count, new BinaryHeap<VertexNode>(count));
+            GraphPriorityQueue queue = new GraphPriorityQueue(count, heap);
             VertexNode[] vertexNodeArray = new VertexNode[count];
             for (int i  = 0; i < count; i++)
             {
                 vertexNodeArray[i] = new VertexNode(i, maxDistance);
             }
-            heap.BuildHeap(vertexNodeArray);
-            heap.ModifyVertexNode(sourceIndex, 0);
-            while (heap.Count != 0)
+            queue.BuildHeap(vertexNodeArray);
+            queue.ModifyVertexNode(sourceIndex, 0);
+            while (queue.Count != 0)
             {
-                VertexNode minNode = heap.ExtractMin();
+                VertexNode minNode = queue.ExtractMin();
                 if (minNode.Length == maxDistance)
                 {
                     break;
@@ -110,7 +121,7 @@ namespace ExtendLibrary.DataStructures
                         if (newLength < result[i])
                         {
                             result[i] = newLength;
-                            heap.ModifyVertexNode(i, newLength);
+                            queue.ModifyVertexNode(i, newLength);
                         }
                     }
                 }

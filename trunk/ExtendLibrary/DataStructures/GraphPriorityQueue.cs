@@ -35,7 +35,6 @@ namespace ExtendLibrary.DataStructures
 
             this.heap = heap;
             this.heap.ExchangeCallBack = Exchange;
-            //heap.ExchangeCallback = Exchange;
         }
 
         #endregion

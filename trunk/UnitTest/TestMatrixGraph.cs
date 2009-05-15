@@ -66,7 +66,7 @@ namespace UnitTest
         }
 
         [Test]
-        public void Test()
+        public void TestBinaryHeapDijkstra()
         {
             Random ran = new Random();
             MatrixGraph graph = new MatrixGraph(100, 101);
@@ -81,7 +81,35 @@ namespace UnitTest
             double[][] floyd = graph.Floyd();
             for (int i = 0; i < 100; i++)
             {
-                double[] dijkstra = graph.Dijkstra(i);
+                double[] dijkstra = graph.Dijkstra(i, new BinaryHeap<VertexNode>());
+                for (int j = 0; j < 100; j++)
+                {
+                    if (floyd[i][j] != dijkstra[j])
+                    {
+                        Console.WriteLine("i:{0} j:{1} floyd:{2} dijkstra:{3}", i, j, floyd[i][j], dijkstra[j]);
+                    }
+                    Assert.AreEqual(floyd[i][j], dijkstra[j]);
+                }
+            }
+        }
+
+        [Test]
+        public void TestArrayHeapDijkstra()
+        {
+            Random ran = new Random();
+            MatrixGraph graph = new MatrixGraph(100, 101);
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    graph.SetUniEdge(i, j, ran.Next(100));
+                }
+                graph.SetUniEdge(i, i, 0);
+            }
+            double[][] floyd = graph.Floyd();
+            for (int i = 0; i < 100; i++)
+            {
+                double[] dijkstra = graph.Dijkstra(i, new ArrayHeap<VertexNode>());
                 for (int j = 0; j < 100; j++)
                 {
                     if (floyd[i][j] != dijkstra[j])

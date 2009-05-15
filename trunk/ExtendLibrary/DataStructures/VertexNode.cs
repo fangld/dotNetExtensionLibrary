@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExtendLibrary.DataStructures
 {
-    internal class VertexNode : IComparable<VertexNode>
+    public class VertexNode : IComparable<VertexNode>
     {
         #region Fields
 
