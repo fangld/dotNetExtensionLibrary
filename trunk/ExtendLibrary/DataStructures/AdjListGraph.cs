@@ -49,16 +49,17 @@ namespace ExtendLibrary.DataStructures
                 result[i] = maxDistance;
             }
             result[sourceIndex] = 0;
-            GraphBinaryHeap heap = new GraphBinaryHeap(count);
+            GraphPriorityQueue heap = new GraphPriorityQueue(count, new BinaryHeap<VertexNode>(count));
+            VertexNode[] vertexNodeArray = new VertexNode[count];
             for (int i = 0; i < count; i++)
             {
-                VertexNode vertexNode = new VertexNode(i, maxDistance);
-                heap.Add(vertexNode);
+                vertexNodeArray[i] = new VertexNode(i, maxDistance);
             }
+            heap.BuildHeap(vertexNodeArray);
             heap.ModifyVertexNode(sourceIndex, 0);
             while (heap.Count != 0)
             {
-                VertexNode minNode = heap.ExtractFirst();
+                VertexNode minNode = heap.ExtractMin();
                 if (minNode.Length == maxDistance)
                 {
                     break;
@@ -177,7 +178,7 @@ namespace ExtendLibrary.DataStructures
         //    BinaryHeap<VertexNode> heap = new BinaryHeap<VertexNode>(count);
         //    while (heap.Count != 0)
         //    {
-        //        VertexNode minNode = heap.ExtractFirst();
+        //        VertexNode minNode = heap.ExtractMin();
         //    }
         //}
 

@@ -38,10 +38,11 @@
     <Compile Include="Common\MultiComparer.cs" />
     <Compile Include="DataStructures\AdjEdgeNode.cs" />
     <Compile Include="DataStructures\AdjListGraph.cs" />
+    <Compile Include="DataStructures\ArrayHeap.cs" />
     <Compile Include="DataStructures\EdgeNode.cs" />
     <Compile Include="DataStructures\FibonacciHeap.cs" />
-    <Compile Include="DataStructures\GraphBinaryHeap.cs" />
-    <Compile Include="DataStructures\IHeap.cs" />
+    <Compile Include="DataStructures\GraphPriorityQueue.cs" />
+    <Compile Include="DataStructures\Heap.cs" />
     <Compile Include="DataStructures\MatrixGraph.cs" />
     <Compile Include="DataStructures\BinaryHeap.cs" />
     <Compile Include="DataStructures\HeapEnumerator.cs" />

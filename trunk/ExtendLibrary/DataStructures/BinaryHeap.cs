@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using ExtendLibrary.Common;
@@ -9,19 +10,9 @@ namespace ExtendLibrary.DataStructures
     ///  Binary heap data structure
     /// </summary>
     /// <typeparam name="T">the type of item</typeparam>
-    public class BinaryHeap<T> : IEnumerable<T>, IHeap<T>
+    public class BinaryHeap<T> : Heap<T>
     {
         #region Fields
-
-        /// <summary>
-        /// the count of the items that minheap contains
-        /// </summary>
-        private int count;
-
-        /// <summary>
-        /// the count of allocated
-        /// </summary>
-        private int capacity;
 
         /// <summary>
         /// the array of items
@@ -29,20 +20,17 @@ namespace ExtendLibrary.DataStructures
         private T[] itemArray;
 
         /// <summary>
-        /// comparer
+        /// the count of allocated
         /// </summary>
-        private readonly MultiComparer<T> comparer;
+        private int capacity;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        /// Get the count of the items that minheap contains
-        /// </summary>
-        public int Count
+        protected override IEnumerator HeapEnumerator
         {
-            get { return count; }
+            get { return itemArray.GetEnumerator(); }
         }
 
         protected internal T[] ItemArray
@@ -58,20 +46,16 @@ namespace ExtendLibrary.DataStructures
         /// Constructor
         /// </summary>
         public BinaryHeap() : this(4)
-        {
-            comparer = new MultiComparer<T>();
-        }
+        {}
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="capacity">the capacity of stored items</param>
-        public BinaryHeap(int capacity)
+        public BinaryHeap(int capacity): base(capacity)
         {
-            count = 0;
             this.capacity = capacity;
             itemArray = new T[capacity];
-            comparer = new MultiComparer<T>();
         }
 
         /// <summary>
@@ -79,10 +63,21 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="collection">a itemArray that contains items</param>
         public BinaryHeap(IEnumerable<T> collection)
+            : base(0)
         {
             BuildHeap(collection);
-            comparer = new MultiComparer<T>();
         }
+
+        ///// <summary>
+        ///// Constructor
+        ///// </summary>
+        ///// <param name="collection">a itemArray that contains items</param>
+        ///// <param name="exchangeCallBack">exchange callback</param>
+        //public BinaryHeap(IEnumerable<T> collection, ExchangeCallback exchangeCallBack)
+        //    :base(0, new MultiComparer<T>(), exchangeCallBack)
+        //{
+        //    BuildHeap(collection);
+        //}
 
         /// <summary>
         /// Constructor
@@ -99,9 +94,8 @@ namespace ExtendLibrary.DataStructures
         /// <param name="capacity">the capacity of stored items</param>
         /// <param name="comparison">comparison that used to compare items</param>
         public BinaryHeap(int capacity, Comparison<T> comparison)
-            :this(capacity)
+            : base(capacity, new MultiComparer<T>(comparison), null)
         {
-            comparer = new MultiComparer<T>(comparison);
         }
 
         /// <summary>
@@ -110,9 +104,8 @@ namespace ExtendLibrary.DataStructures
         /// <param name="collection">a itemArray that contains items</param>
         /// <param name="comparison">comparison that used to compare items</param>        
         public BinaryHeap(IEnumerable<T> collection, Comparison<T> comparison)
-            : this(collection)
+            : base(collection, new MultiComparer<T>(comparison))
         {
-            comparer = new MultiComparer<T>(comparison);
         }
 
         /// <summary>
@@ -130,9 +123,8 @@ namespace ExtendLibrary.DataStructures
         /// <param name="capacity">the capacity of stored items</param>
         /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public BinaryHeap(int capacity, IComparer<T> comparer)
-            : this(capacity)
+            : base(capacity, new MultiComparer<T>(comparer))
         {
-            this.comparer = new MultiComparer<T>(comparer);
         }
 
         /// <summary>
@@ -141,9 +133,8 @@ namespace ExtendLibrary.DataStructures
         /// <param name="collection">a itemArray that contains items</param>
         /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public BinaryHeap(IEnumerable<T> collection, IComparer<T> comparer)
-            : this(collection)
+            : base(collection, new MultiComparer<T>(comparer))
         {
-            this.comparer = new MultiComparer<T>(comparer);
         }
 
         #endregion
@@ -154,22 +145,22 @@ namespace ExtendLibrary.DataStructures
         {
             T xItem = itemArray[xIndex];
             T yItem = itemArray[yIndex];
-            return comparer.Compare(xItem, yItem);
+            return Comparer.Compare(xItem, yItem);
         }
 
         /// <summary>
         /// 调整堆
         /// </summary>
         /// <param name="index">调整的位置</param>
-        private void Heapify(int index)
+        private void ShiftDown(int index)
         {
             do
             {
                 int leftIndex = ((index << 1) + 1);
                 int rightIndex = leftIndex + 1;
-                int minIndex = (leftIndex < count && Compare(leftIndex, index) < 0) ? leftIndex : index;
+                int minIndex = (leftIndex < Count && Compare(leftIndex, index) < 0) ? leftIndex : index;
 
-                if (rightIndex < count && Compare(rightIndex, minIndex) < 0)
+                if (rightIndex < Count && Compare(rightIndex, minIndex) < 0)
                 {
                     minIndex = rightIndex;
                 }
@@ -205,8 +196,9 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="xIndex">the index of first item</param>
         /// <param name="yIndex">the index of second item</param>
-        protected virtual void Exchange(int xIndex, int yIndex)
+        protected override void Exchange(int xIndex, int yIndex)
         {
+            base.Exchange(xIndex, yIndex);
             T exchange = itemArray[xIndex];
             itemArray[xIndex] = itemArray[yIndex];
             itemArray[yIndex] = exchange;
@@ -214,29 +206,20 @@ namespace ExtendLibrary.DataStructures
 
         #endregion
 
-        #region IEnumerable<T> 成员
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return new HeapEnumerator<T>(itemArray);
-        }
-
-        #endregion
-
-        #region IHeap<T> 成员
+        #region Heap<T> 成员
 
         /// <summary>
         /// build the heap
         /// </summary>
-        public void BuildHeap(IEnumerable<T> collection)
+        public override void BuildHeap(IEnumerable<T> collection)
         {
-            count = 0;
+            Count = 0;
             foreach (T item in collection)
             {
-                count++;
+                Count++;
             }
-            capacity = count;
-            itemArray = new T[count];
+            capacity = Count;
+            itemArray = new T[Count];
 
             int index = 0;
             foreach (T item in collection)
@@ -245,9 +228,9 @@ namespace ExtendLibrary.DataStructures
                 index++;
             }
 
-            for (index = (count - 1) >> 1; index >= 0; index--)
+            for (index = (Count - 1) >> 1; index >= 0; index--)
             {
-                Heapify(index);
+                ShiftDown(index);
             }
         }
 
@@ -255,37 +238,25 @@ namespace ExtendLibrary.DataStructures
         /// Add item
         /// </summary>
         /// <param name="item">a item that is ready to add</param>
-        public void Add(T item)
+        public override void Add(T item)
         {
-            count++;
-            if (count > capacity)
+            Count++;
+            if (Count > capacity)
             {
                 capacity <<= 1;
                 Array.Resize(ref itemArray, capacity);
             }
-            itemArray[count - 1] = item;
-            ShiftUp(count - 1);
-        }
-
-        /// <summary>
-        /// Add items
-        /// </summary>
-        /// <param name="collection">a colletion that contaions items</param>
-        public void Add(IEnumerable<T> collection)
-        {
-            foreach (T item in collection)
-            {
-                Add(item);
-            }
+            itemArray[--Count] = item;
+            ShiftUp(Count);
         }
 
         /// <summary>
         /// Return the first item
         /// </summary>
         /// <returns>Return the first item</returns>
-        public T Peek()
+        public override T Peek()
         {
-            if (count == 0)
+            if (Count == 0)
             {
                 throw new InvalidOperationException("Minheap is empty!");
             }
@@ -294,49 +265,27 @@ namespace ExtendLibrary.DataStructures
         }
 
         /// <summary>
-        /// Extract the top n items
-        /// </summary>
-        /// <param name="number">the number of items that is extracted</param>
-        /// <returns>return a list that contains the top n items</returns>
-        public IList<T> ExtractList(int number)
-        {
-            if (count < number)
-            {
-                string message = string.Format("Minheap contains less than {0} items!", number);
-                throw new InvalidOperationException(message);
-            }
-            IList<T> result = new List<T>(number);
-            for (int i = 0; i < number; i++)
-            {
-                T item = ExtractFirst();
-                result.Add(item);
-            }
-            return result;
-        }
-
-        /// <summary>
         /// Extract the first item
         /// </summary>
         /// <returns>Return the first iem</returns>
-        public T ExtractFirst()
+        public override T ExtractMin()
         {
-            if (count == 0)
+            if (Count == 0)
             {
                 throw new InvalidOperationException("Minheap is empty!");
             }
             T result = itemArray[0];
-            itemArray[0] = itemArray[count - 1];
-            count--;
-            Heapify(0);
+            itemArray[0] = itemArray[--Count];
+            ShiftDown(0);
             return result;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void DecreaseKey(int index, T value)
+        public override void DecreaseKey(int index, T value)
         {
-            if (comparer.Compare(itemArray[index], value) < 0)
+            if (Comparer.Compare(itemArray[index], value) < 0)
             {
                 string message = string.Format("Value {0} is greater than array[{1}]", value, index);
                 throw new InvalidOperationException(message);
@@ -345,13 +294,18 @@ namespace ExtendLibrary.DataStructures
             ShiftUp(index);
         }
 
+        public override T GetIndex(int index)
+        {
+            return itemArray[index];
+        }
+
         #endregion
 
-        #region IEnumerable 成员
+        #region IEnumerable<T> 成员
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        public override IEnumerator<T> GetEnumerator()
         {
-            return itemArray.GetEnumerator();
+            return new HeapEnumerator<T>(itemArray);
         }
 
         #endregion
