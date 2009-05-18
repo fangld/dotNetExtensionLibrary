@@ -1,4 +1,3 @@
-#if EnumerableGenerator
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +6,12 @@ namespace ExtendLibrary.Algorithms
 {
     public static class EnumerableGenerator
     {
-        public static IEnumerator<T> GetPowerSet<T>(IEnumerable<T> enumerable)
+        public static IEnumerator<T> GetMixedRadix<T>(IEnumerable<T> enumerable)
         {
             throw new NotImplementedException();
         }
 
+#if All
         public static IEnumerator<T> GetPermutation<T>(IEnumerable<T> enumerable)
         {
             throw new NotImplementedException();
@@ -21,6 +21,6 @@ namespace ExtendLibrary.Algorithms
         {
             throw new NotImplementedException();
         }
+#endif
     }
 }
-#endif
