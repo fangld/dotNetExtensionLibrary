@@ -26,20 +26,6 @@ namespace ExtendLibrary.DataStructures
 
         #endregion
 
-        #region Properties
-
-        protected override IEnumerator HeapEnumerator
-        {
-            get { return itemArray.GetEnumerator(); }
-        }
-
-        protected internal T[] ItemArray
-        {
-            get { return itemArray; }
-        }
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -305,7 +291,7 @@ namespace ExtendLibrary.DataStructures
 
         public override IEnumerator<T> GetEnumerator()
         {
-            return new HeapEnumerator<T>(itemArray);
+            return new HeapEnumerator<T>(itemArray, Count);
         }
 
         #endregion

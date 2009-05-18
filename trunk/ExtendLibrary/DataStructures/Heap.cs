@@ -35,11 +35,6 @@ namespace ExtendLibrary.DataStructures
             set { count = value; }
         }
 
-        protected abstract IEnumerator HeapEnumerator
-        {
-            get;
-        }
-
         protected MultiComparer<T> Comparer
         {
             get { return comparer; }
@@ -187,7 +182,7 @@ namespace ExtendLibrary.DataStructures
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return HeapEnumerator;
+            return GetEnumerator();
         }
 
         #endregion

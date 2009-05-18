@@ -10,11 +10,17 @@ namespace ExtendLibrary.DataStructures
 
         private IEnumerator<T> enumerator;
 
+        private int count;
+
+        private int currentIndex;
+
         #endregion
 
-        internal HeapEnumerator(IEnumerable<T> enumerable)
+        internal HeapEnumerator(IEnumerable<T> enumerable, int count)
         {
             enumerator = enumerable.GetEnumerator();
+            this.count = count;
+            currentIndex = 0;
         }
 
         #region IEnumerator<T> ≥…‘±
@@ -46,12 +52,14 @@ namespace ExtendLibrary.DataStructures
 
         public bool MoveNext()
         {
-            return enumerator.MoveNext();
+            currentIndex++;
+            return (currentIndex < count);
         }
 
         public void Reset()
         {
             enumerator.Reset();
+            currentIndex = 0;
         }
 
         #endregion
