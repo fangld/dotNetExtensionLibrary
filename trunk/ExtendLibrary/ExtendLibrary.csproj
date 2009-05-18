@@ -35,6 +35,8 @@
   <ItemGroup>
     <Compile Include="Algorithms\EnumerableGenerator.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
+    <Compile Include="Algorithms\MixedRadixEnumerable.cs" />
+    <Compile Include="Algorithms\MixedRadixEnumerator.cs" />
     <Compile Include="Algorithms\Selection.cs" />
     <Compile Include="Common\MultiComparer.cs" />
     <Compile Include="DataStructures\AdjEdgeNode.cs" />
