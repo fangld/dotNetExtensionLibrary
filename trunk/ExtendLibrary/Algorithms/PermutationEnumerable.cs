@@ -5,11 +5,7 @@ using System.Text;
 
 namespace ExtendLibrary.Algorithms
 {
-    /// <summary>
-    /// Mixed radix enumerable
-    /// </summary>
-    /// <typeparam name="T">the type of item</typeparam>
-    public class MixedRadixEnumerable<T> : IEnumerable<T[]>
+    public class PermutationEnumerable<T> : IEnumerable<T[]>
     {
         #region Fields
 
@@ -23,7 +19,7 @@ namespace ExtendLibrary.Algorithms
         /// Constructor
         /// </summary>
         /// <param name="collection">the collection contains the items that visited</param>
-        public MixedRadixEnumerable(IEnumerable<T> collection)
+        public PermutationEnumerable(IEnumerable<T> collection)
         {
             int count = 0;
             foreach (T item in collection)
