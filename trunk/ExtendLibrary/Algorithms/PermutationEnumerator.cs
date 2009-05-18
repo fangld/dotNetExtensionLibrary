@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExtendLibrary.Algorithms
 {
-    public class MixedRadixEnumerator<T> : IEnumerator<T[]>
+    public class PermutationEnumerator<T> : IEnumerator<T[]>
     {
         #region Fields
 
@@ -22,7 +22,7 @@ namespace ExtendLibrary.Algorithms
 
         #region Constructors
 
-        public MixedRadixEnumerator(T[] array)
+        public PermutationEnumerator(T[] array)
         {
             count = array.Length;
             currentIndexes = new int[count];

@@ -37,6 +37,8 @@
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
     <Compile Include="Algorithms\MixedRadixEnumerable.cs" />
     <Compile Include="Algorithms\MixedRadixEnumerator.cs" />
+    <Compile Include="Algorithms\PermutationEnumerable.cs" />
+    <Compile Include="Algorithms\PermutationEnumerator.cs" />
     <Compile Include="Algorithms\Selection.cs" />
     <Compile Include="Common\MultiComparer.cs" />
     <Compile Include="DataStructures\AdjEdgeNode.cs" />
