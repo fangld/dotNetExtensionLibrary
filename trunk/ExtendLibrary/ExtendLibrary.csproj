@@ -40,7 +40,7 @@
     <Compile Include="Algorithms\PermutationEnumerable.cs" />
     <Compile Include="Algorithms\PermutationEnumerator.cs" />
     <Compile Include="Algorithms\Selection.cs" />
-    <Compile Include="Common\MultiComparer.cs" />
+    <Compile Include="Common\NativeComparer.cs" />
     <Compile Include="DataStructures\AdjEdgeNode.cs" />
     <Compile Include="DataStructures\AdjListGraph.cs" />
     <Compile Include="DataStructures\ArrayHeap.cs" />
