@@ -111,6 +111,47 @@ namespace ExtendLibrary.Algorithms
             throw new NotImplementedException();
         }
 
+        public static void GetCombination<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
+        {
+            T[] originalArray = GetArray(collection);
+            T[] combinationArray = new T[t];
+            if (originalArray.Length < t)
+            {
+                throw new InvalidOperationException("The number of items that collection contains is no more than t!");
+            }
+
+            int[] c = new int[t + 3];
+            for (int i = 1; i <= t; i++)
+            {
+                c[i] = i - 1;
+            }
+            c[t + 1] = originalArray.Length;
+            c[t + 2] = 0;
+            do
+            {
+                for (int i = 1; i <= t; i++)
+                {
+                    if (c[i] < 0)
+                    {
+                        Console.WriteLine("i:{0} value:{1}", i, c[i]);
+                    }
+                    combinationArray[i - 1] = originalArray[c[i]];
+                }
+                action(combinationArray);
+                int j = 1;
+                while (c[j] + 1 == c[j + 1])
+                {
+                    c[j] = j - 1;
+                    j++;
+                }
+
+                if (j > t)
+                    break;
+                c[j]++;
+
+            } while (true);
+        }
+
         public static void GetCombination2<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
         {
             T[] originalArray = GetArray(collection);
@@ -174,46 +215,6 @@ namespace ExtendLibrary.Algorithms
             } while (true);
         }
 
-        public static void GetCombination<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
-        {
-            T[] originalArray = GetArray(collection);
-            T[] combinationArray = new T[t];
-            if (originalArray.Length < t)
-            {
-                throw new InvalidOperationException("The number of items that collection contains is no more than t!");
-            }
-
-            int[] c = new int[t + 3];
-            for (int i = 1; i <= t; i++)
-            {
-                c[i] = i - 1;
-            }
-            c[t + 1] = originalArray.Length;
-            c[t + 2] = 0;
-            do
-            {
-                for (int i = 1; i <= t; i++)
-                {
-                    if (c[i] < 0)
-                    {
-                        Console.WriteLine("i:{0} value:{1}", i, c[i]);
-                    }
-                    combinationArray[i - 1] = originalArray[c[i]];
-                }
-                action(combinationArray);
-                int j = 1;
-                while (c[j] + 1 == c[j + 1])
-                {
-                    c[j] = j - 1;
-                    j++;
-                }
-
-                if (j > t)
-                    break;
-                c[j]++;
-
-            } while (true);
-        }
 
         #endregion
     }
