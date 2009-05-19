@@ -58,7 +58,7 @@ namespace ExtendLibrary.Algorithms
 
         public static T NthSelect(T[] array, int n)
         {
-            return NthSelect(array, n, MultiComparison<T>.Compare);
+            return NthSelect(array, n, NativeComparer<T>.Compare);
         }
 
         public static T NthSelect(T[] array, int offset, int length, int n, Comparison<T> comparison)
@@ -73,7 +73,7 @@ namespace ExtendLibrary.Algorithms
 
         public static T NthSelect(T[] array, int offset, int length, int n)
         {
-            return NthSelect(array, MultiComparison<T>.Compare, offset, offset + length - 1, n);
+            return NthSelect(array, NativeComparer<T>.Compare, offset, offset + length - 1, n);
         }
 
     }
