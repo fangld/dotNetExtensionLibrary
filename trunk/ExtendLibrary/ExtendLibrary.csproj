@@ -33,7 +33,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\EnumerableGenerator.cs" />
+    <Compile Include="Algorithms\CollectionGenerator.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
     <Compile Include="Algorithms\MixedRadixEnumerable.cs" />
     <Compile Include="Algorithms\MixedRadixEnumerator.cs" />

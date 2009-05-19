@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ExtendLibrary.Common
 {
-    public static class MultiComparison<T>
+    public static class NativeComparer<T>
     {
         public static int Compare(T x, T y)
         {

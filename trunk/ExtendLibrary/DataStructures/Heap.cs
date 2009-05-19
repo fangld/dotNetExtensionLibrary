@@ -64,7 +64,7 @@ namespace ExtendLibrary.DataStructures
         }
 
         protected Heap(int count)
-            : this(count, MultiComparison<T>.Compare, null)
+            : this(count, NativeComparer<T>.Compare, null)
         {
         }
 
