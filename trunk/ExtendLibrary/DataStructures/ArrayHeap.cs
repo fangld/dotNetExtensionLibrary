@@ -76,7 +76,7 @@ namespace ExtendLibrary.DataStructures
         /// <param name="capacity">the capacity of stored items</param>
         /// <param name="comparison">comparison that used to compare items</param>
         public ArrayHeap(int capacity, Comparison<T> comparison)
-            : base(capacity, new MultiComparer<T>(comparison), null)
+            : base(capacity, comparison, null)
         {
         }
 
@@ -86,7 +86,7 @@ namespace ExtendLibrary.DataStructures
         /// <param name="collection">a itemArray that contains items</param>
         /// <param name="comparison">comparison that used to compare items</param>        
         public ArrayHeap(IEnumerable<T> collection, Comparison<T> comparison)
-            : base(collection, new MultiComparer<T>(comparison))
+            : base(collection, comparison)
         {
         }
 
@@ -105,7 +105,7 @@ namespace ExtendLibrary.DataStructures
         /// <param name="capacity">the capacity of stored items</param>
         /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public ArrayHeap(int capacity, IComparer<T> comparer)
-            : base(capacity, new MultiComparer<T>(comparer))
+            : base(capacity, comparer.Compare)
         {
         }
 
@@ -115,7 +115,7 @@ namespace ExtendLibrary.DataStructures
         /// <param name="collection">a itemArray that contains items</param>
         /// <param name="comparer">a comparer that implement IComparer that used to compare items</param>
         public ArrayHeap(IEnumerable<T> collection, IComparer<T> comparer)
-            : base(collection, new MultiComparer<T>(comparer))
+            : base(collection, comparer.Compare)
         {
         }
 
@@ -127,7 +127,7 @@ namespace ExtendLibrary.DataStructures
         {
             T xItem = itemArray[xIndex];
             T yItem = itemArray[yIndex];
-            return Comparer.Compare(xItem, yItem);
+            return Comparison(xItem, yItem);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace ExtendLibrary.DataStructures
 
         public override void DecreaseKey(int index, T value)
         {
-            if (Comparer.Compare(itemArray[index], value) < 0)
+            if (Comparison(itemArray[index], value) < 0)
             {
                 string message = string.Format("Value {0} is greater than array[{1}]", value, index);
                 throw new InvalidOperationException(message);

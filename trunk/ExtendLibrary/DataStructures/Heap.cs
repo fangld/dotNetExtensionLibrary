@@ -18,7 +18,7 @@ namespace ExtendLibrary.DataStructures
         /// <summary>
         /// comparer
         /// </summary>
-        private readonly MultiComparer<T> comparer;
+        private readonly Comparison<T> comparison;
 
         private ExchangeCallback exchangeCallback;
 
@@ -35,9 +35,9 @@ namespace ExtendLibrary.DataStructures
             set { count = value; }
         }
 
-        protected MultiComparer<T> Comparer
+        protected Comparison<T> Comparison
         {
-            get { return comparer; }
+            get { return comparison; }
         }
 
         public ExchangeCallback ExchangeCallBack
@@ -64,30 +64,24 @@ namespace ExtendLibrary.DataStructures
         }
 
         protected Heap(int count)
-            : this(count, new MultiComparer<T>(), null)
+            : this(count, MultiComparison<T>.Compare, null)
         {
         }
 
-        //protected Heap(ExchangeCallback exchangeCallback):
-        //    this(0, new MultiComparer<T>(), exchangeCallback)
-        //{
-        //}
-
-        protected Heap(int count, MultiComparer<T> comparer):
-            this(count, comparer, null)
+        protected Heap(int count, Comparison<T> comparison)
+            : this(count, comparison, null)
         {
-            
         }
 
-        protected Heap(int count, MultiComparer<T> comparer, ExchangeCallback exchangeCallback)
+        protected Heap(int count, Comparison<T> comparison, ExchangeCallback exchangeCallback)
         {
             this.count = count;
-            this.comparer = comparer;
+            this.comparison = comparison;
             this.exchangeCallback = exchangeCallback;
         }
 
-        protected Heap(IEnumerable<T> collection, MultiComparer<T> comparer)
-            :this(0, comparer, null)
+        protected Heap(IEnumerable<T> collection, Comparison<T> comparison)
+            : this(0, comparison, null)
         {
             BuildHeap(collection);
         }
