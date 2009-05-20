@@ -40,15 +40,13 @@ namespace ExtendLibrary.DataStructures
             get { return comparison; }
         }
 
-        public ExchangeCallback ExchangeCallBack
-        {
-            get { return exchangeCallback; }
-            set { exchangeCallback = value; }
-        }
-
         #endregion
 
         #region Delegates
+
+        public event ExchangeCallback BeforeExchange;
+
+        public event ExchangeCallback AfterExchange;
 
         public delegate void ExchangeCallback(int xIndex, int yIndex);
 
@@ -95,13 +93,22 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="xIndex">the index of first item</param>
         /// <param name="yIndex">the index of second item</param>
-        protected virtual void Exchange(int xIndex, int yIndex)
+        protected void Exchange(int xIndex, int yIndex)
         {
-            if (exchangeCallback != null)
+            if (BeforeExchange != null)
             {
-                exchangeCallback(xIndex, yIndex);
+                BeforeExchange(xIndex, yIndex);
+            }
+
+            ExchangeIndex(xIndex, yIndex);
+
+            if (AfterExchange != null)
+            {
+                AfterExchange(xIndex, yIndex);
             }
         }
+
+        protected abstract void ExchangeIndex(int xIndex, int yIndex);
 
         /// <summary>
         /// build the heap
@@ -162,6 +169,18 @@ namespace ExtendLibrary.DataStructures
         public abstract void DecreaseKey(int i, T value);
 
         public abstract T GetIndex(int index);
+
+        protected void BeforeExchangeCallback(int xIndex, int yIndex)
+        {
+            if (BeforeExchange != null)
+                BeforeExchange(xIndex, yIndex);
+        }
+
+        protected void AfterExchangeCallback(int xIndex, int yIndex)
+        {
+            if (AfterExchange != null)
+                AfterExchange(xIndex, yIndex);
+        }
 
         #endregion
 
