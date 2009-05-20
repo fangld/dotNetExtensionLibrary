@@ -50,6 +50,8 @@ namespace ExtendLibrary.Algorithms
 
         #endregion
 
+        #region ToBinaryCode
+
         public static sbyte ToBinaryCode(sbyte grayCode)
         {
             sbyte result = grayCode;
@@ -129,5 +131,7 @@ namespace ExtendLibrary.Algorithms
             }
             return result;
         }
+
+        #endregion
     }
 }
