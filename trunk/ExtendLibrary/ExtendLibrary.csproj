@@ -37,8 +37,6 @@
     <Compile Include="Tools\BitOperator.cs" />
     <Compile Include="Algorithms\CollectionGenerator.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
-    <Compile Include="Algorithms\MixedRadixEnumerable.cs" />
-    <Compile Include="Algorithms\MixedRadixEnumerator.cs" />
     <Compile Include="Algorithms\Selection.cs" />
     <Compile Include="Common\NativeComparer.cs" />
     <Compile Include="DataStructures\AdjEdgeNode.cs" />
