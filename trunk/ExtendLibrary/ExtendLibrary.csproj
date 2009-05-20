@@ -33,6 +33,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\MathExtend.cs" />
+    <Compile Include="Tools\BitOperator.cs" />
     <Compile Include="Algorithms\CollectionGenerator.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
     <Compile Include="Algorithms\MixedRadixEnumerable.cs" />
