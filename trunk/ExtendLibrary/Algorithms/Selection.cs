@@ -129,7 +129,35 @@ namespace ExtendLibrary.Algorithms
 
         #endregion
 
-        #region QuickSort first kth item
+        #region Sort first kth item
+
+        private static void SortFirstKth(T[] array, Comparison<T> comparison, int left, int right, int k)
+        {
+            if (array.Length <= 20)
+            {
+                BubbleSortKth(array, comparison, left, right, k);
+            }
+            else
+            {
+                QuickSortFirstKth(array, comparison, left, right, k);
+            }
+        }
+
+        private static void BubbleSortKth(T[] array, Comparison<T> comparison, int left, int right, int k)
+        {
+            for (int i = 0; i < k; i++)
+            {
+                for (int j = left; j <= right - i; j++)
+                {
+                    if (comparison(array[j], array[j + 1]) > 0)
+                    {
+                        T exchange = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = exchange;
+                    }
+                }
+            }
+        }
 
         private static void QuickSortFirstKth(T[] array, Comparison<T> comparison, int left, int right, int k)
         {
@@ -143,34 +171,34 @@ namespace ExtendLibrary.Algorithms
             }
         }
 
-        public static void QuickSortFirstKth(T[] array, int k)
+        public static void SortFirstKth(T[] array, int k)
         {
-            QuickSortFirstKth(array, 0, array.Length, k);
+            SortFirstKth(array, 0, array.Length, k);
         }
 
-        public static void QuickSortFirstKth(T[] array, int k, IComparer<T> comparer)
+        public static void SortFirstKth(T[] array, int k, IComparer<T> comparer)
         {
-            QuickSortFirstKth(array, 0, array.Length, k, comparer);
+            SortFirstKth(array, 0, array.Length, k, comparer);
         }
 
-        public static void QuickSortFirstKth(T[] array, int k, Comparison<T> comparison)
+        public static void SortFirstKth(T[] array, int k, Comparison<T> comparison)
         {
-            QuickSortFirstKth(array, 0, array.Length, k, comparison);
+            SortFirstKth(array, 0, array.Length, k, comparison);
         }
 
-        public static void QuickSortFirstKth(T[] array, int index, int length, int k)
+        public static void SortFirstKth(T[] array, int index, int length, int k)
         {
-            QuickSortFirstKth(array, index, index + length - 1, k, NativeComparer<T>.Compare);
+            SortFirstKth(array, index, index + length - 1, k, NativeComparer<T>.Compare);
         }
 
-        public static void QuickSortFirstKth(T[] array, int index, int length, int k, IComparer<T> comparer)
+        public static void SortFirstKth(T[] array, int index, int length, int k, IComparer<T> comparer)
         {
-            QuickSortFirstKth(array, index, index + length - 1, k, comparer.Compare);
+            SortFirstKth(array, index, index + length - 1, k, comparer.Compare);
         }
 
-        public static void QuickSortFirstKth(T[] array, int index, int length, int k, Comparison<T> comparison)
+        public static void SortFirstKth(T[] array, int index, int length, int k, Comparison<T> comparison)
         {
-            QuickSortFirstKth(array, comparison, index, index + length - 1, k);
+            SortFirstKth(array, comparison, index, index + length - 1, k);
         }
 
         #endregion
