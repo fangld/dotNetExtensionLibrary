@@ -27,17 +27,50 @@ namespace ExtendLibrary.Algorithms
 
         public static void GetMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action)
         {
-            throw new NotImplementedException();
+            GetMixedRadix(collection, action, NativeComparer<T>.Compare);
         }
 
         public static void GetMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
         {
-            throw new NotImplementedException();
+            GetMixedRadix(collection, action, comparer.Compare);
         }
 
         public static void GetMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
         {
-            throw new NotImplementedException();
+            T[] originalArray = GetArray(collection);
+
+            int count = originalArray.Length;
+            T[] scanArray = new T[count];
+            int[] index = new int[count];
+            int[] maxIndex = new int[count];
+            for (int i = 0; i < count; i++)
+            {
+                maxIndex[i] = count;
+            }
+
+            do
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    scanArray[i] = originalArray[index[i]];
+                }
+                action(scanArray);
+                int j = count - 1;
+                while (j != -1)
+                {
+                    if (index[j] == maxIndex[j] - 1)
+                    {
+                        index[j] = 0;
+                        j--;
+                        continue;
+                    }
+                    break;
+                }
+                if (j == -1)
+                    return;
+                index[j]++;
+            } while (true);
+
         }
 
         #endregion
@@ -106,15 +139,15 @@ namespace ExtendLibrary.Algorithms
             GetCombination(collection, combinationNumber, action, NativeComparer<T>.Compare);
         }
 
-        public static void GetCombination<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
+        public static void GetCombination<T>(IEnumerable<T> collection, int combinationNumber, Action<T[]> action, IComparer<T> comparer)
         {
-            throw new NotImplementedException();
+            GetCombination(collection, combinationNumber, action, comparer.Compare);
         }
 
         public static void GetCombination<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
         {
             T[] originalArray = GetArray(collection);
-            T[] combinationArray = new T[t];
+            T[] scanArray = new T[t];
             if (originalArray.Length < t)
             {
                 throw new InvalidOperationException("The number of items that collection contains is no more than t!");
@@ -135,9 +168,9 @@ namespace ExtendLibrary.Algorithms
                     {
                         Console.WriteLine("i:{0} value:{1}", i, c[i]);
                     }
-                    combinationArray[i - 1] = originalArray[c[i]];
+                    scanArray[i - 1] = originalArray[c[i]];
                 }
-                action(combinationArray);
+                action(scanArray);
                 int j = 1;
                 while (c[j] + 1 == c[j + 1])
                 {
@@ -155,7 +188,7 @@ namespace ExtendLibrary.Algorithms
         public static void GetCombination2<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
         {
             T[] originalArray = GetArray(collection);
-            T[] combinationArray = new T[t];
+            T[] scanArray = new T[t];
             if (originalArray.Length < t)
             {
                 throw new InvalidOperationException("The number of items that collection contains is no more than t!");
@@ -177,9 +210,9 @@ namespace ExtendLibrary.Algorithms
                     {
                         Console.WriteLine("i:{0} value:{1}", i, c[i]);
                     }
-                    combinationArray[i - 1] = originalArray[c[i]];
+                    scanArray[i - 1] = originalArray[c[i]];
                 }
-                action(combinationArray);
+                action(scanArray);
                 int x;
 
                 if (j > 0)

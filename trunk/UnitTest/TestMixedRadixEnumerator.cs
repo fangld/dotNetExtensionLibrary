@@ -38,5 +38,28 @@ namespace UnitTest
                 Console.WriteLine();
             }
         }
+
+        [Test]
+        public void TestTwoMethod()
+        {
+            int[] array = new int[] { 1, 2 };
+            CollectionGenerator.GetMixedRadix(array, Show);
+        }
+
+        [Test]
+        public void TestFourMethod()
+        {
+            int[] array = new int[] {1, 2, 3, 4};
+            CollectionGenerator.GetMixedRadix(array, Show);
+        }
+
+        private void Show(int[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.Write("{0} ", array[i]);
+            }
+            Console.WriteLine();
+        }
     }
 }
