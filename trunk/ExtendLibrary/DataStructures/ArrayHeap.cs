@@ -135,9 +135,8 @@ namespace ExtendLibrary.DataStructures
         /// </summary>
         /// <param name="xIndex">the index of first item</param>
         /// <param name="yIndex">the index of second item</param>
-        protected override void Exchange(int xIndex, int yIndex)
+        protected override void ExchangeIndex(int xIndex, int yIndex)
         {
-            base.Exchange(xIndex, yIndex);
             T exchange = itemArray[xIndex];
             itemArray[xIndex] = itemArray[yIndex];
             itemArray[yIndex] = exchange;
