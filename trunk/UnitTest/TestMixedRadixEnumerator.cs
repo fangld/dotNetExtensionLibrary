@@ -13,14 +13,14 @@ namespace UnitTest
         public void TestTwoMethod()
         {
             int[] array = new int[] { 1, 2 };
-            CollectionGenerator.GetMixedRadix(array, Show);
+            EnumerableScanner.ScanMixedRadix(array, Show);
         }
 
         [Test]
         public void TestFourMethod()
         {
             int[] array = new int[] {1, 2, 3, 4};
-            CollectionGenerator.GetMixedRadix(array, Show);
+            EnumerableScanner.ScanMixedRadix(array, Show);
         }
 
         private void Show(int[] array)

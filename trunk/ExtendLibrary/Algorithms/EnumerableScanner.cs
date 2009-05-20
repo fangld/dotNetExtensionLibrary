@@ -5,7 +5,7 @@ using ExtendLibrary.Common;
 
 namespace ExtendLibrary.Algorithms
 {
-    public static class CollectionGenerator
+    public static class EnumerableScanner
     {
         public static T[] GetArray<T>(IEnumerable<T> collection)
         {
@@ -23,19 +23,19 @@ namespace ExtendLibrary.Algorithms
             return result;
         }
 
-        #region GetMixedRadix
+        #region ScanMixedRadix
 
-        public static void GetMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action)
+        public static void ScanMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action)
         {
-            GetMixedRadix(collection, action, NativeComparer<T>.Compare);
+            ScanMixedRadix(collection, action, NativeComparer<T>.Compare);
         }
 
-        public static void GetMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
+        public static void ScanMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
         {
-            GetMixedRadix(collection, action, comparer.Compare);
+            ScanMixedRadix(collection, action, comparer.Compare);
         }
 
-        public static void GetMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
+        public static void ScanMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
         {
             T[] originalArray = GetArray(collection);
 
@@ -75,19 +75,19 @@ namespace ExtendLibrary.Algorithms
 
         #endregion
 
-        #region GetPermutation
+        #region ScanPermutation
 
-        public static void GetPermutation<T>(IEnumerable<T> collection, Action<T[]> action)
+        public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action)
         {
-            GetPermutation(collection, action, NativeComparer<T>.Compare);
+            ScanPermutation(collection, action, NativeComparer<T>.Compare);
         }
 
-        public static void GetPermutation<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
+        public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
         {
-            GetPermutation(collection, action, comparer.Compare);            
+            ScanPermutation(collection, action, comparer.Compare);            
         }
 
-        public static void GetPermutation<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
+        public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
         {
             T[] array = GetArray(collection);
             Array.Sort(array);
@@ -132,19 +132,19 @@ namespace ExtendLibrary.Algorithms
 
         #endregion
 
-        #region GetCombination
+        #region ScanCombination
 
-        public static void GetCombination<T>(IEnumerable<T> collection, int combinationNumber, Action<T[]> action)
+        public static void ScanCombination<T>(IEnumerable<T> collection, int combinationNumber, Action<T[]> action)
         {
-            GetCombination(collection, combinationNumber, action, NativeComparer<T>.Compare);
+            ScanCombination(collection, combinationNumber, action, NativeComparer<T>.Compare);
         }
 
-        public static void GetCombination<T>(IEnumerable<T> collection, int combinationNumber, Action<T[]> action, IComparer<T> comparer)
+        public static void ScanCombination<T>(IEnumerable<T> collection, int combinationNumber, Action<T[]> action, IComparer<T> comparer)
         {
-            GetCombination(collection, combinationNumber, action, comparer.Compare);
+            ScanCombination(collection, combinationNumber, action, comparer.Compare);
         }
 
-        public static void GetCombination<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
+        public static void ScanCombination<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
         {
             T[] originalArray = GetArray(collection);
             T[] scanArray = new T[t];

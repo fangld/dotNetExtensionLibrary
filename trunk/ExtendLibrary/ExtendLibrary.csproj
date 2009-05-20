@@ -35,7 +35,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\MathExtend.cs" />
     <Compile Include="Tools\BitOperator.cs" />
-    <Compile Include="Algorithms\CollectionGenerator.cs" />
+    <Compile Include="Algorithms\EnumerableScanner.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
     <Compile Include="Algorithms\Selection.cs" />
     <Compile Include="Common\NativeComparer.cs" />

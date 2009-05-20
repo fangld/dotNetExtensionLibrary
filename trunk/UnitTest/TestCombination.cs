@@ -13,7 +13,7 @@ namespace UnitTest
         public void Test1()
         {
             int[] array = new int[] {1, 2, 3, 4};
-            CollectionGenerator.GetCombination2(array, 3, Show, delegate(int x, int y) { return x.CompareTo(y); });
+            EnumerableScanner.GetCombination2(array, 3, Show, delegate(int x, int y) { return x.CompareTo(y); });
         }
 
         private void Show(int[] array)
