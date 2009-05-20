@@ -30,51 +30,149 @@ namespace ExtendLibrary.Algorithms
             return storeIndex;
         }
 
-        private static T NthSelect(T[] array, Comparison<T> comparison, int left, int right, int n)
+        #region Select Kth item
+
+        private static T SelectKth(T[] array, Comparison<T> comparison, int left, int right, int k)
         {
             do
             {
                 int pivotIndex = (left + right) >> 1;
                 int pivotNewIndex = Patition(array, left, right, pivotIndex, comparison);
-                if (n == pivotNewIndex)
-                    return array[n];
-                if (n < pivotNewIndex)
+                if (k == pivotNewIndex)
+                    return array[k];
+                if (k < pivotNewIndex)
                     right = pivotNewIndex - 1;
                 else
                     left = pivotNewIndex + 1;
             } while (true);
         }
 
-
-        public static T NthSelect(T[] array, int n, Comparison<T> comparison)
+        public static T SelectKth(T[] array, int k, Comparison<T> comparison)
         {
-            return NthSelect(array, comparison, 0, n - 1, n);
+            return SelectKth(array, comparison, 0, k - 1, k);
         }
 
-        public static T NthSelect(T[] array, int n, IComparer<T> comparer)
+        public static T SelectKth(T[] array, int k, IComparer<T> comparer)
         {
-            return NthSelect(array, n, comparer.Compare);
+            return SelectKth(array, k, comparer.Compare);
         }
 
-        public static T NthSelect(T[] array, int n)
+        public static T SelectKth(T[] array, int k)
         {
-            return NthSelect(array, n, NativeComparer<T>.Compare);
+            return SelectKth(array, k, NativeComparer<T>.Compare);
         }
 
-        public static T NthSelect(T[] array, int offset, int length, int n, Comparison<T> comparison)
+        public static T SelectKth(T[] array, int index, int length, int k, Comparison<T> comparison)
         {
-            return NthSelect(array, comparison, offset, offset + length - 1, n);
+            return SelectKth(array, comparison, index, index + length - 1, k);
         }
 
-        public static T NthSelect(T[] array, int offset, int length, int n, IComparer<T> comparer)
+        public static T SelectKth(T[] array, int index, int length, int k, IComparer<T> comparer)
         {
-            return NthSelect(array, comparer.Compare, offset, offset + length - 1, n);
+            return SelectKth(array, comparer.Compare, index, index + length - 1, k);
         }
 
-        public static T NthSelect(T[] array, int offset, int length, int n)
+        public static T SelectKth(T[] array, int index, int length, int k)
         {
-            return NthSelect(array, NativeComparer<T>.Compare, offset, offset + length - 1, n);
+            return SelectKth(array, NativeComparer<T>.Compare, index, index + length - 1, k);
         }
 
+        #endregion
+
+        #region Get first kth item
+
+        private static void GetFirstKth(T[]array, Comparison<T> comparison, int left, int right, int k)
+        {
+            if (right > left)
+            {
+                int pivotIndex = (left + right) >> 1;
+                int pivotNewIndex = Patition(array, left, right, pivotIndex, comparison);
+                if (pivotNewIndex > k)
+                    GetFirstKth(array, comparison, left, pivotNewIndex - 1, k);
+                else if (pivotNewIndex < k)
+                    GetFirstKth(array, comparison, pivotNewIndex + 1, right, k);
+            }
+        }
+
+        public static T[] GetFirstKth(T[] array, int k)
+        {
+            return GetFirstKth(array, 0, array.Length, k);
+        }
+
+        public static T[] GetFirstKth(T[] array, int k, IComparer<T> comparer)
+        {
+            return GetFirstKth(array, 0, array.Length, k, comparer);
+        }
+
+        public static T[] GetFirstKth(T[] array, int k, Comparison<T> comparison)
+        {
+            return GetFirstKth(array, 0, array.Length, k, comparison);
+        }
+
+        public static T[] GetFirstKth(T[] array, int index, int length, int k)
+        {
+            return GetFirstKth(array, index, length, k, NativeComparer<T>.Compare);
+        }
+
+        public static T[] GetFirstKth(T[] array, int index, int length, int k, IComparer<T> comparer)
+        {
+            return GetFirstKth(array, index, length, k, comparer.Compare);
+        }
+
+        public static T[] GetFirstKth(T[] array, int index, int length, int k, Comparison<T> comparison)
+        {
+            T[] result = new T[length - index];
+            Array.Copy(array, index, result, 0, length);
+            GetFirstKth(result, comparison, 0, length - 1, k);
+            return result;
+        }
+
+        #endregion
+
+        #region QuickSort first kth item
+
+        private static void QuickSortFirstKth(T[] array, Comparison<T> comparison, int left, int right, int k)
+        {
+            if (right > left)
+            {
+                int pivotIndex = (left + right) >> 1;
+                int pivotNewIndex = Patition(array, left, right, pivotIndex, comparison);
+                QuickSortFirstKth(array, comparison, left, pivotNewIndex - 1, k);
+                if (pivotNewIndex < k)
+                    QuickSortFirstKth(array, comparison, pivotNewIndex + 1, right, k);
+            }
+        }
+
+        public static void QuickSortFirstKth(T[] array, int k)
+        {
+            QuickSortFirstKth(array, 0, array.Length, k);
+        }
+
+        public static void QuickSortFirstKth(T[] array, int k, IComparer<T> comparer)
+        {
+            QuickSortFirstKth(array, 0, array.Length, k, comparer);
+        }
+
+        public static void QuickSortFirstKth(T[] array, int k, Comparison<T> comparison)
+        {
+            QuickSortFirstKth(array, 0, array.Length, k, comparison);
+        }
+
+        public static void QuickSortFirstKth(T[] array, int index, int length, int k)
+        {
+            QuickSortFirstKth(array, index, index + length - 1, k, NativeComparer<T>.Compare);
+        }
+
+        public static void QuickSortFirstKth(T[] array, int index, int length, int k, IComparer<T> comparer)
+        {
+            QuickSortFirstKth(array, index, index + length - 1, k, comparer.Compare);
+        }
+
+        public static void QuickSortFirstKth(T[] array, int index, int length, int k, Comparison<T> comparison)
+        {
+            QuickSortFirstKth(array, comparison, index, index + length - 1, k);
+        }
+
+        #endregion
     }
 }

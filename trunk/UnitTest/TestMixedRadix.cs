@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace UnitTest
 {
     [TestFixture]
-    public class TestMixedRadixEnumerator
+    public class TestMixedRadix
     {
         [Test]
         public void TestTwoMethod()
