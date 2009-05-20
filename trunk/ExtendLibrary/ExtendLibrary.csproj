@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\MathExtend.cs" />
+    <Compile Include="Algorithms\Sorter.cs" />
     <Compile Include="Tools\BitOperator.cs" />
     <Compile Include="Algorithms\EnumerableScanner.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
