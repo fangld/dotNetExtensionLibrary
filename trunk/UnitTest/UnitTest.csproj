@@ -39,7 +39,7 @@
     <Compile Include="TestDisjointSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestMatrixGraph.cs" />
-    <Compile Include="TestMixedRadixEnumerator.cs" />
+    <Compile Include="TestMixedRadix.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExtendLibrary\ExtendLibrary.csproj">
