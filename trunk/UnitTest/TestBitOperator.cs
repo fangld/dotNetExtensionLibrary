@@ -13,9 +13,9 @@ namespace UnitTest
         public void Test1()
         {
             Assert.AreEqual(4, BitOperator.GetCountOfBitOne(0x1111));
-            Assert.AreEqual(60, BitOperator.GetCountOfBitOne((long)0x1111));
-            Assert.AreEqual(32, BitOperator.GetCountOfBitOne(0));
-            Assert.AreEqual(64, BitOperator.GetCountOfBitOne((long)0));
+            Assert.AreEqual(60, BitOperator.GetCountOfBitZero((long)0x1111));
+            Assert.AreEqual(32, BitOperator.GetCountOfBitZero(0));
+            Assert.AreEqual(64, BitOperator.GetCountOfBitZero((long)0));
         }
     }
 }
