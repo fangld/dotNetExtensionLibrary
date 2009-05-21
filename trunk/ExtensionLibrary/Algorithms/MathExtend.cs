@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ExtensionLibrary.Tools;
 
 namespace ExtensionLibrary.Algorithms
 {
@@ -170,6 +171,138 @@ namespace ExtensionLibrary.Algorithms
             x |= (x >> 16);
             x |= (x >> 32);
             return x + 1;
+        }
+
+        #endregion
+
+        #region Sqrt
+
+        public static sbyte Sqrt(sbyte x)
+        {
+            if (x <= 1)
+                return x;
+            int s = 4 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1);
+
+            sbyte g0 = (sbyte)(1 << s);
+            sbyte g1 = (sbyte)((g0 + (x >> s)) >> 1);
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (sbyte)((g0 + x / g0) >> 1);
+            }
+            return g0;
+        }
+
+        public static short Sqrt(short x)
+        {
+            if (x <= 1)
+                return x;
+            int s = 4 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1);
+
+            short g0 = (short)(1 << s);
+            short g1 = (short)((g0 + (x >> s)) >> 1);
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (sbyte)((g0 + x / g0) >> 1);
+            }
+            return g0;
+        }
+
+        public static int Sqrt(int x)
+        {
+            if (x <= 1)
+                return x;
+            int s = 16 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1);
+
+            int g0 = (1 << s);
+            int g1 = ((g0 + (x >> s)) >> 1);
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (g0 + x/g0) >> 1;
+            }
+            return g0;
+        }
+
+        public static long Sqrt(long x)
+        {
+            if (x <= 1)
+                return x;
+            int s = 32 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1);
+
+            long g0 = ((long)1) << s;
+            long g1 = (g0 + (x >> s)) >> 1;
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (g0 + x / g0) >> 1;
+            }
+            return g0;
+        }
+
+        public static byte Sqrt(byte x)
+        {
+            if (x <= 1)
+                return x;
+            byte s = (byte)(4 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1));
+
+            byte g0 = (byte)(1 << s);
+            byte g1 = (byte)((g0 + (x >> s)) >> 1);
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (byte)((g0 + x / g0) >> 1);
+            }
+            return g0;
+        }
+
+        public static ushort Sqrt(ushort x)
+        {
+            if (x <= 1)
+                return x;
+            ushort s = (ushort)(4 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1));
+
+            ushort g0 = (ushort)(1 << s);
+            ushort g1 = (ushort)((g0 + (x >> s)) >> 1);
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (ushort)((g0 + x / g0) >> 1);
+            }
+            return g0;
+        }
+
+        public static uint Sqrt(uint x)
+        {
+            if (x <= 1)
+                return x;
+            int s = (16 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1));
+
+            uint g0 = (uint)(1 << s);
+            uint g1 = ((g0 + (x >> s)) >> 1);
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (g0 + x / g0) >> 1;
+            }
+            return g0;
+        }
+
+        public static ulong Sqrt(ulong x)
+        {
+            if (x <= 1)
+                return x;
+            int s = 32 - (BitOperator.GetNumberOfLeadingZero(x - 1) >> 1);
+
+            ulong g0 = ((ulong)1) << s;
+            ulong g1 = (g0 + (x >> s)) >> 1;
+            while (g1 < g0)
+            {
+                g0 = g1;
+                g1 = (g0 + x / g0) >> 1;
+            }
+            return g0;
         }
 
         #endregion
