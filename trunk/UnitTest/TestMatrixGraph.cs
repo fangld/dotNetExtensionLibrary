@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ExtendLibrary.DataStructures;
+using ExtensionLibrary.DataStructures;
 using NUnit.Framework;
 
 namespace UnitTest

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtendLibrary", "ExtendLibrary\ExtendLibrary.csproj", "{158F5987-C10C-432E-8503-D9EFC83769F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionLibrary", "ExtendLibrary\ExtensionLibrary.csproj", "{158F5987-C10C-432E-8503-D9EFC83769F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{39445B1A-24A9-4D30-8C5C-58DA438D5CEB}"
 EndProject

@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using ExtendLibrary.Common;
+using ExtensionLibrary.Common;
 
-namespace ExtendLibrary.DataStructures
+namespace ExtensionLibrary.DataStructures
 {
     /// <summary>
     ///  Binary heap data structure

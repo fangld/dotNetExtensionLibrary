@@ -42,9 +42,9 @@
     <Compile Include="TestMixedRadix.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExtendLibrary\ExtendLibrary.csproj">
+    <ProjectReference Include="..\ExtendLibrary\ExtensionLibrary.csproj">
       <Project>{158F5987-C10C-432E-8503-D9EFC83769F9}</Project>
-      <Name>ExtendLibrary</Name>
+      <Name>ExtensionLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

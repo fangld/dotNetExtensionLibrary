@@ -7,8 +7,8 @@
     <ProjectGuid>{158F5987-C10C-432E-8503-D9EFC83769F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExtendLibrary</RootNamespace>
-    <AssemblyName>ExtendLibrary</AssemblyName>
+    <RootNamespace>ExtensionLibrary</RootNamespace>
+    <AssemblyName>ExtensionLibrary</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

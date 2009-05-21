@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ExtendLibrary.Common;
+using ExtensionLibrary.Common;
 
-namespace ExtendLibrary.Algorithms
+namespace ExtensionLibrary.Algorithms
 {
     public static class EnumerableScanner
     {
