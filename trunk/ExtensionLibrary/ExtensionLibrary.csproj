@@ -33,11 +33,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\MathExtend.cs" />
+    <Compile Include="Algorithms\MathExtension.cs" />
     <Compile Include="Tools\BitOperator.cs" />
     <Compile Include="Algorithms\EnumerableScanner.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
-    <Compile Include="Algorithms\ArrayExtend.cs" />
+    <Compile Include="Algorithms\ArrayExtension.cs" />
     <Compile Include="Common\NativeComparer.cs" />
     <Compile Include="DataStructures\AdjEdgeNode.cs" />
     <Compile Include="DataStructures\AdjListGraph.cs" />

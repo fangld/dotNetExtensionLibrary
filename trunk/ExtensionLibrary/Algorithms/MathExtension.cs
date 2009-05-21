@@ -5,11 +5,14 @@ using ExtensionLibrary.Tools;
 
 namespace ExtensionLibrary.Algorithms
 {
-    public static class MathExtend
+    /// <summary>
+    /// Quick integer math function
+    /// </summary>
+    public static class MathExtension
     {
-        #region Floor Power 2
+        #region Floor Pow 2
 
-        public static sbyte GetFloorOfPower2(sbyte x)
+        public static sbyte GetFloorOfPow2(sbyte x)
         {
             x |= (sbyte)(x >> 1);
             x |= (sbyte)(x >> 2);
@@ -17,7 +20,7 @@ namespace ExtensionLibrary.Algorithms
             return (sbyte)(x - (x >> 1));
         }
 
-        public static short GetFloorOfPower2(short x)
+        public static short GetFloorOfPow2(short x)
         {
             x |= (short)(x >> 1);
             x |= (short)(x >> 2);
@@ -26,7 +29,7 @@ namespace ExtensionLibrary.Algorithms
             return (short)(x - (x >> 1));
         }
 
-        public static int GetFloorOfPower2(int x)
+        public static int GetFloorOfPow2(int x)
         {
             x |= (x >> 1);
             x |= (x >> 2);
@@ -36,7 +39,7 @@ namespace ExtensionLibrary.Algorithms
             return x - (x >> 1);
         }
 
-        public static long GetFloorOfPower2(long x)
+        public static long GetFloorOfPow2(long x)
         {
             x |= (x >> 1);
             x |= (x >> 2);
@@ -47,7 +50,7 @@ namespace ExtensionLibrary.Algorithms
             return x - (x >> 1);
         }
 
-        public static byte GetFloorOfPower2(byte x)
+        public static byte GetFloorOfPow2(byte x)
         {
             x |= (byte)(x >> 1);
             x |= (byte)(x >> 2);
@@ -55,7 +58,7 @@ namespace ExtensionLibrary.Algorithms
             return (byte)(x - (x >> 1));
         }
 
-        public static ushort GetFloorOfPower2(ushort x)
+        public static ushort GetFloorOfPow2(ushort x)
         {
             x |= (ushort)(x >> 1);
             x |= (ushort)(x >> 2);
@@ -64,7 +67,7 @@ namespace ExtensionLibrary.Algorithms
             return (ushort)(x - (x >> 1));
         }
 
-        public static uint GetFloorOfPower2(uint x)
+        public static uint GetFloorOfPow2(uint x)
         {
             x |= (x >> 1);
             x |= (x >> 2);
@@ -74,7 +77,7 @@ namespace ExtensionLibrary.Algorithms
             return x - (x >> 1);
         }
 
-        public static ulong GetFloorOfPower2(ulong x)
+        public static ulong GetFloorOfPow2(ulong x)
         {
             x |= (x >> 1);
             x |= (x >> 2);
@@ -87,9 +90,9 @@ namespace ExtensionLibrary.Algorithms
 
         #endregion
 
-        #region Ceil Power 2
+        #region Ceil Pow 2
 
-        public static sbyte GetCeilOfPower2(sbyte x)
+        public static sbyte GetCeilOfPow2(sbyte x)
         {
             x--;
             x |= (sbyte)(x >> 1);
@@ -98,7 +101,7 @@ namespace ExtensionLibrary.Algorithms
             return (sbyte)(x + 1);
         }
 
-        public static short GetCeilOfPower2(short x)
+        public static short GetCeilOfPow2(short x)
         {
             x--;
             x |= (short)(x >> 1);
@@ -108,7 +111,7 @@ namespace ExtensionLibrary.Algorithms
             return (short)(x + 1);
         }
 
-        public static int GetCeilOfPower2(int x)
+        public static int GetCeilOfPow2(int x)
         {
             x--;
             x |= (x >> 1);
@@ -119,7 +122,7 @@ namespace ExtensionLibrary.Algorithms
             return x + 1;
         }
 
-        public static long GetCeilOfPower2(long x)
+        public static long GetCeilOfPow2(long x)
         {
             x--;
             x |= (x >> 1);
@@ -131,7 +134,7 @@ namespace ExtensionLibrary.Algorithms
             return x + 1;
         }
 
-        public static byte GetCeilOfPower2(byte x)
+        public static byte GetCeilOfPow2(byte x)
         {
             x--;
             x |= (byte)(x >> 1);
@@ -140,7 +143,7 @@ namespace ExtensionLibrary.Algorithms
             return (byte)(x + 1);
         }
 
-        public static ushort GetCeilOfPower2(ushort x)
+        public static ushort GetCeilOfPow2(ushort x)
         {
             x--;
             x |= (ushort)(x >> 1);
@@ -150,7 +153,7 @@ namespace ExtensionLibrary.Algorithms
             return (ushort)(x + 1);
         }
 
-        public static uint GetCeilOfPower2(uint x)
+        public static uint GetCeilOfPow2(uint x)
         {
             x--;
             x |= (x >> 1);
@@ -161,7 +164,7 @@ namespace ExtensionLibrary.Algorithms
             return x + 1;
         }
 
-        public static ulong GetCeilOfPower2(ulong x)
+        public static ulong GetCeilOfPow2(ulong x)
         {
             x--;
             x |= (x >> 1);
@@ -451,6 +454,292 @@ namespace ExtensionLibrary.Algorithms
                 }
             }
             return y;
+        }
+
+        #endregion
+
+        #region Pow
+
+        public static int Pow(int x, uint y)
+        {
+            int z = 1;
+            int p = x;
+            do
+            {
+                if ((y & 1) != 0)
+                {
+                    z *= p;
+                }
+                y >>= 1;
+                if (y==0)
+                {
+                    return z;
+                }
+                p *= p;
+            } while (true);
+        }
+
+        public static long Pow(long x, ulong y)
+        {
+            long z = 1;
+            long p = x;
+            do
+            {
+                if ((y & 1) != 0)
+                {
+                    z *= p;
+                }
+                y >>= 1;
+                if (y == 0)
+                {
+                    return z;
+                }
+                p *= p;
+            } while (true);
+        }
+
+        public static uint Pow(uint x, uint y)
+        {
+            uint z = 1;
+            uint p = x;
+            do
+            {
+                if ((y & 1) != 0)
+                {
+                    z *= p;
+                }
+                y >>= 1;
+                if (y == 0)
+                {
+                    return z;
+                }
+                p *= p;
+            } while (true);
+        }
+
+        public static ulong Pow(ulong x, ulong y)
+        {
+            ulong z = 1;
+            ulong p = x;
+            do
+            {
+                if ((y & 1) != 0)
+                {
+                    z *= p;
+                }
+                y >>= 1;
+                if (y == 0)
+                {
+                    return z;
+                }
+                p *= p;
+            } while (true);
+        }
+
+        public static float Pow(float x, uint y)
+        {
+            float z = 1.0f;
+            float p = x;
+            do
+            {
+                if ((y & 1) != 0)
+                {
+                    z *= p;
+                }
+                y >>= 1;
+                if (y == 0)
+                {
+                    return z;
+                }
+                p *= p;
+            } while (true);
+        }
+
+        public static double Pow(double x, uint y)
+        {
+            double z = 1.0;
+            double p = x;
+            do
+            {
+                if ((y & 1) != 0)
+                {
+                    z *= p;
+                }
+                y >>= 1;
+                if (y == 0)
+                {
+                    return z;
+                }
+                p *= p;
+            } while (true);
+        }
+
+        #endregion
+
+        #region Log 2
+
+        public static sbyte Log2(sbyte x)
+        {
+            return (sbyte)(7 - BitOperator.GetNumberOfLeadingZero(x));
+        }
+
+        public static short Log2(short x)
+        {
+            return (short)(15 - BitOperator.GetNumberOfLeadingZero(x));
+        }
+
+        public static int Log2(int x)
+        {
+            return 31 - BitOperator.GetNumberOfLeadingZero(x);
+        }
+
+        public static long Log2(long x)
+        {
+            return 63 - BitOperator.GetNumberOfLeadingZero(x);
+        }
+
+        public static byte Log2(byte x)
+        {
+            return (byte)(7 - BitOperator.GetNumberOfLeadingZero(x));
+        }
+
+        public static ushort Log2(ushort x)
+        {
+            return (ushort)(15 - BitOperator.GetNumberOfLeadingZero(x));
+        }
+
+        public static uint Log2(uint x)
+        {
+            return (uint)(31 - BitOperator.GetNumberOfLeadingZero(x));
+        }
+
+        public static ulong Log2(ulong x)
+        {
+            return (ulong)(63 - BitOperator.GetNumberOfLeadingZero(x));
+        }
+
+        #endregion
+
+        #region Log10
+
+        public static sbyte Log10(sbyte x)
+        {
+            sbyte result = -1;
+            sbyte p = 1;
+            for (; result <= 3; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
+        }
+
+        public static short Log10(short x)
+        {
+            short result = -1;
+            short p = 1;
+            for (; result <= 5; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
+        }
+
+        public static int Log(int x)
+        {
+            int result = -1;
+            int p = 1;
+            for (; result <= 8; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
+        }
+
+        public static long Log(long x)
+        {
+            int result = -1;
+            int p = 1;
+            for (; result <= 20; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
+        }
+
+        public static byte Log(byte x)
+        {
+            byte result = 0;
+            byte p = 1;
+            for (; result <= 3; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
+        }
+
+        public static ushort Log(ushort x)
+        {
+            ushort result = 0;
+            ushort p = 1;
+            for (; result <= 3; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
+        }
+
+        public static uint Log(uint x)
+        {
+            uint result = 0;
+            uint p = 1;
+            for (; result <= 3; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
+        }
+
+        public static ulong Log(ulong x)
+        {
+            ulong result = 0;
+            ulong p = 1;
+            for (; result <= 3; result++)
+            {
+                if (x < p)
+                {
+                    return result;
+                }
+                p *= 10;
+            }
+            return result;
         }
 
         #endregion

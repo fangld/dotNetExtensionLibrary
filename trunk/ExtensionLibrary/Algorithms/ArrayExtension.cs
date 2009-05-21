@@ -5,7 +5,7 @@ using ExtensionLibrary.Common;
 
 namespace ExtensionLibrary.Algorithms
 {
-    public static class ArrayExtend<T>
+    public static class ArrayExtension<T>
     {
         internal static int Patition(T[] array, int left, int right, int pivotIndex, Comparison<T> comparison)
         {
