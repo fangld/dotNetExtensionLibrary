@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using ExtendLibrary.Algorithms;
+using ExtensionLibrary.Algorithms;
 using NUnit.Framework;
 
 namespace UnitTest

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ExtendLibrary.DataStructures
+namespace ExtensionLibrary.DataStructures
 {
     /// <summary>
     /// ÊýÖµ·¶Î§

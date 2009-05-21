@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExtendLibrary.Tools
+namespace ExtensionLibrary.Tools
 {
     /// <summary>
     /// Datetime handler

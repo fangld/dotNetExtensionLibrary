@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExtendLibrary.Common
+namespace ExtensionLibrary.Common
 {
     public static class NativeComparer<T>
     {

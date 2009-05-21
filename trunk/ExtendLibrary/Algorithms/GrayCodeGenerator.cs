@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExtendLibrary.Algorithms
+namespace ExtensionLibrary.Algorithms
 {
     public static class GrayCodeGenerator
     {

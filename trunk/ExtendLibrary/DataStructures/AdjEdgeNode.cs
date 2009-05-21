@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExtendLibrary.DataStructures
+namespace ExtensionLibrary.DataStructures
 {
     public class AdjEdgeNode
     {
