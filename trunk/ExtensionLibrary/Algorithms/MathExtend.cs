@@ -306,5 +306,153 @@ namespace ExtensionLibrary.Algorithms
         }
 
         #endregion
+
+        #region Cbrt
+
+        public static sbyte Cbrt(sbyte x)
+        {
+            int s = 6;
+            sbyte y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                int b = (3 * y * (y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= (sbyte)b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        public static short Cbrt(short x)
+        {
+            int s = 15;
+            short y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                int b = (3 * y * (y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= (short)b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        public static int Cbrt(int x)
+        {
+            int s = 30;
+            int y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                int b = (3*y*(y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        public static long Cbrt(long x)
+        {
+            int s = 60;
+            long y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                long b = (3 * y * (y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        public static byte Cbrt(byte x)
+        {
+            int s = 6;
+            byte y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                int b = (3 * y * (y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= (byte)b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        public static ushort Cbrt(ushort x)
+        {
+            int s = 15;
+            ushort y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                int b = (3 * y * (y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= (ushort)b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        public static uint Cbrt(uint x)
+        {
+            int s = 30;
+            uint y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                uint b = (3 * y * (y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        public static ulong Cbrt(ulong x)
+        {
+            int s = 60;
+            ulong y = 0;
+            while (s >= 0)
+            {
+                y <<= 1;
+                ulong b = (3 * y * (y + 1) + 1) << s;
+                s -= 3;
+                if (x >= b)
+                {
+                    x -= b;
+                    y++;
+                }
+            }
+            return y;
+        }
+
+        #endregion
     }
 }
