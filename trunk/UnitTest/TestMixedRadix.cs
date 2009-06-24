@@ -14,6 +14,11 @@ namespace UnitTest
         {
             int[] array = new int[] { 1, 2 };
             EnumerableScanner.ScanMixedRadix(array, Show);
+            
+            foreach (int[] item in EnumerableGenerator.GetMixedRadixEnumerator(array))
+            {
+                Show(item);
+            }
         }
 
         [Test]
@@ -25,11 +30,13 @@ namespace UnitTest
 
         private void Show(int[] array)
         {
+            //array[0] = 2;
             for (int i = 0; i < array.Length; i++)
             {
                 Console.Write("{0} ", array[i]);
             }
             Console.WriteLine();
+            array[0] = 2;
         }
     }
 }

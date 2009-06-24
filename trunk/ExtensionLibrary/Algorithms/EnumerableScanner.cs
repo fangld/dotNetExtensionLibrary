@@ -1,43 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using ExtensionLibrary.Common;
 
 namespace ExtensionLibrary.Algorithms
 {
     public static class EnumerableScanner
     {
-        public static T[] GetArray<T>(IEnumerable<T> collection)
-        {
-            int count = 0;
-            foreach (T item in collection)
-            {
-                count++;
-            }
-            T[] result = new T[count];
-            int index = 0;
-            foreach (T item in collection)
-            {
-                result[index++] = item;
-            }
-            return result;
-        }
-
         #region ScanMixedRadix
 
         public static void ScanMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action)
         {
-            ScanMixedRadix(collection, action, NativeComparer<T>.Compare);
-        }
-
-        public static void ScanMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
-        {
-            ScanMixedRadix(collection, action, comparer.Compare);
-        }
-
-        public static void ScanMixedRadix<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
-        {
-            T[] originalArray = GetArray(collection);
+            T[] originalArray = collection.ToArray();
 
             int count = originalArray.Length;
             T[] scanArray = new T[count];
@@ -89,7 +64,7 @@ namespace ExtensionLibrary.Algorithms
 
         public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
         {
-            T[] array = GetArray(collection);
+            T[] array = collection.ToArray();
             Array.Sort(array);
             while (true)
             {
@@ -146,7 +121,7 @@ namespace ExtensionLibrary.Algorithms
 
         public static void ScanCombination<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
         {
-            T[] originalArray = GetArray(collection);
+            T[] originalArray = collection.ToArray();
             T[] scanArray = new T[t];
             if (originalArray.Length < t)
             {
@@ -187,7 +162,7 @@ namespace ExtensionLibrary.Algorithms
 
         public static void GetCombination2<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
         {
-            T[] originalArray = GetArray(collection);
+            T[] originalArray = collection.ToArray();
             T[] scanArray = new T[t];
             if (originalArray.Length < t)
             {
