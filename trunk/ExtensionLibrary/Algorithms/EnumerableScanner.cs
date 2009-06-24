@@ -65,7 +65,7 @@ namespace ExtensionLibrary.Algorithms
         public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
         {
             T[] array = collection.ToArray();
-            Array.Sort(array);
+            Array.Sort(array, comparison);
             while (true)
             {
                 action(array);

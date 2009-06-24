@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExtensionLibrary.Common;
 
 namespace ExtensionLibrary.Algorithms
 {
@@ -44,6 +45,63 @@ namespace ExtensionLibrary.Algorithms
                     yield break;
                 index[j]++;
             } while (true);
+        }
+      
+        #endregion
+
+        #region GeneratePermutation
+
+        public static IEnumerable<T[]> GetPermutationEnumerator<T>(IEnumerable<T> collection, IComparer<T> comparer)
+        {
+            return GetPermutationEnumerator(collection, comparer.Compare);
+        }
+
+        public static IEnumerable<T[]> GetPermutationEnumerator<T>(IEnumerable<T> collection)
+        {
+            return GetPermutationEnumerator(collection, NativeComparer<T>.Compare);
+        }
+
+        public static IEnumerable<T[]> GetPermutationEnumerator<T>(IEnumerable<T> collection, Comparison<T> comparison)
+        {
+            T[] array = collection.ToArray();
+            Array.Sort(array, comparison);
+            while (true)
+            {
+                yield return array;
+                int count = array.Length;
+                int j = count - 2;
+                while (true)
+                {
+                    if (j == -1)
+                        yield break;
+                    if (comparison(array[j], array[j + 1]) >= 0)
+                    {
+                        j--;
+                    }
+                    else
+                        break;
+                }
+
+                int l = count - 1;
+                while (comparison(array[j], array[l]) >= 0)
+                {
+                    l--;
+                }
+                T exchange = array[j];
+                array[j] = array[l];
+                array[l] = exchange;
+
+                int k = j + 1;
+                l = count - 1;
+                while (k < l)
+                {
+                    exchange = array[k];
+                    array[k] = array[l];
+                    array[l] = exchange;
+                    k++;
+                    l--;
+                }
+            }
         }
 
         #endregion
