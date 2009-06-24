@@ -60,6 +60,7 @@
     <Compile Include="Algorithms\EnumerableGenerator.cs" />
     <Compile Include="Algorithms\MathExtension.cs" />
     <Compile Include="Mathematics\Complex.cs" />
+    <Compile Include="Random\RandomGenerator.cs" />
     <Compile Include="Tools\BitOperator.cs" />
     <Compile Include="Algorithms\EnumerableScanner.cs" />
     <Compile Include="Algorithms\GrayCodeGenerator.cs" />
