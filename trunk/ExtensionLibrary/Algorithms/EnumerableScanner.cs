@@ -111,33 +111,23 @@ namespace ExtensionLibrary.Algorithms
 
         public static void ScanCombination<T>(IEnumerable<T> collection, int combinationNumber, Action<T[]> action)
         {
-            ScanCombination(collection, combinationNumber, action, NativeComparer<T>.Compare);
-        }
-
-        public static void ScanCombination<T>(IEnumerable<T> collection, int combinationNumber, Action<T[]> action, IComparer<T> comparer)
-        {
-            ScanCombination(collection, combinationNumber, action, comparer.Compare);
-        }
-
-        public static void ScanCombination<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
-        {
             T[] originalArray = collection.ToArray();
-            T[] scanArray = new T[t];
-            if (originalArray.Length < t)
+            T[] scanArray = new T[combinationNumber];
+            if (originalArray.Length < combinationNumber)
             {
-                throw new InvalidOperationException("The number of items that collection contains is no more than t!");
+                throw new InvalidOperationException("The number of items that collection contains is no more than combinationNumber!");
             }
 
-            int[] c = new int[t + 3];
-            for (int i = 1; i <= t; i++)
+            int[] c = new int[combinationNumber + 3];
+            for (int i = 1; i <= combinationNumber; i++)
             {
                 c[i] = i - 1;
             }
-            c[t + 1] = originalArray.Length;
-            c[t + 2] = 0;
+            c[combinationNumber + 1] = originalArray.Length;
+            c[combinationNumber + 2] = 0;
             do
             {
-                for (int i = 1; i <= t; i++)
+                for (int i = 1; i <= combinationNumber; i++)
                 {
                     if (c[i] < 0)
                     {
@@ -153,7 +143,7 @@ namespace ExtensionLibrary.Algorithms
                     j++;
                 }
 
-                if (j > t)
+                if (j > combinationNumber)
                     break;
                 c[j]++;
 
