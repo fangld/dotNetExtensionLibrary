@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ExtensionLibrary.Algorithms;
 using NUnit.Framework;
@@ -7,13 +8,14 @@ using NUnit.Framework;
 namespace UnitTest
 {
     [TestFixture]
-    public class TestCombination
+    public class TestPermutation
     {
+
         [Test]
         public void Test1()
         {
-            int[] array = new int[] {1, 2, 3, 4, 5, 6};
-            EnumerableScanner.ScanCombination(array, 6, Show);
+            int[] array = new int[] {1, 2, 3, 4};
+            EnumerableScanner.ScanPermutation(array, Show);
         }
 
         private void Show(int[] array)

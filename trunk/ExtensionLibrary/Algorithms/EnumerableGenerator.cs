@@ -51,57 +51,126 @@ namespace ExtensionLibrary.Algorithms
 
         #region GeneratePermutation
 
-        public static IEnumerable<T[]> GetPermutationEnumerator<T>(IEnumerable<T> collection, IComparer<T> comparer)
-        {
-            return GetPermutationEnumerator(collection, comparer.Compare);
-        }
-
         public static IEnumerable<T[]> GetPermutationEnumerator<T>(IEnumerable<T> collection)
         {
-            return GetPermutationEnumerator(collection, NativeComparer<T>.Compare);
-        }
-
-        public static IEnumerable<T[]> GetPermutationEnumerator<T>(IEnumerable<T> collection, Comparison<T> comparison)
-        {
             T[] array = collection.ToArray();
-            Array.Sort(array, comparison);
-            while (true)
+            int length = array.Length;
+            int[] c = new int[length];
+            int[] o = new int[length];
+            for (int i = 0; i < length; i++)
+            {
+                o[i] = 1;
+            }
+
+            do
             {
                 yield return array;
-                int count = array.Length;
-                int j = count - 2;
-                while (true)
+                int j = length - 1;
+                int s = 0;
+                int q;
+                do
                 {
-                    if (j == -1)
-                        yield break;
-                    if (comparison(array[j], array[j + 1]) >= 0)
+                    q = c[j] + o[j];
+                    if (q < 0)
                     {
+                        o[j] = -o[j];
                         j--;
+                        continue;
                     }
-                    else
-                        break;
-                }
+                    if (q == j + 1)
+                    {
+                        if (j == 0)
+                        {
+                            yield break;
+                        }
+                        s++;
+                        o[j] = -o[j];
+                        j--;
+                        continue;
+                    }
+                    break;
+                } while (true);
 
-                int l = count - 1;
-                while (comparison(array[j], array[l]) >= 0)
-                {
-                    l--;
-                }
-                T exchange = array[j];
-                array[j] = array[l];
-                array[l] = exchange;
+                int exchangIndex1 = j - c[j] + s;
+                int exchangIndex2 = j - q + s;
+                T exchange = array[exchangIndex1];
+                array[exchangIndex1] = array[exchangIndex2];
+                array[exchangIndex2] = exchange;
+                c[j] = q;
+            } while (true);
+        }
 
-                int k = j + 1;
-                l = count - 1;
-                while (k < l)
-                {
-                    exchange = array[k];
-                    array[k] = array[l];
-                    array[l] = exchange;
-                    k++;
-                    l--;
-                }
+        #endregion
+
+        #region GenerateCombination
+
+        public static IEnumerable<T[]> GetCombinationEnumerator<T>(IEnumerable<T> collection, int combinationNumber)
+        {
+            T[] originalArray = collection.ToArray();
+            T[] scanArray = new T[combinationNumber];
+            if (originalArray.Length < combinationNumber)
+            {
+                throw new InvalidOperationException("The number of items that collection contains is no more than combinationNumber!");
             }
+
+            if (originalArray.Length == combinationNumber)
+            {
+                yield return originalArray;
+                yield break;
+            }
+
+            int[] c = new int[combinationNumber + 2];
+            for (int i = 0; i < combinationNumber; i++)
+            {
+                c[i] = i;
+            }
+            c[combinationNumber] = originalArray.Length;
+            c[combinationNumber + 1] = 0;
+            int j = combinationNumber - 1;
+            do
+            {
+                for (int i = 0; i < combinationNumber; i++)
+                {
+                    scanArray[i] = originalArray[c[i]];
+                }
+                yield return scanArray;
+                int x;
+
+                if (j >= 0)
+                {
+                    x = j;
+                    c[j] = x + 1;
+                    j--;
+                    continue;
+                }
+
+                if (c[0] + 1 < c[1])
+                {
+                    c[0]++;
+                    continue;
+                }
+
+                j = 1;
+                do
+                {
+                    c[j - 1] = j - 1;
+                    x = c[j] + 1;
+                    if (x == c[j + 1])
+                    {
+                        j++;
+                    }
+                    else break;
+                } while (true);
+
+                if (j >= combinationNumber)
+                {
+                    yield break;
+                }
+
+                c[j] = x;
+                j--;
+
+            } while (true);
         }
 
         #endregion

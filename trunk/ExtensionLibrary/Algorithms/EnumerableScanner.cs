@@ -54,55 +54,51 @@ namespace ExtensionLibrary.Algorithms
 
         public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action)
         {
-            ScanPermutation(collection, action, NativeComparer<T>.Compare);
-        }
-
-        public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action, IComparer<T> comparer)
-        {
-            ScanPermutation(collection, action, comparer.Compare);            
-        }
-
-        public static void ScanPermutation<T>(IEnumerable<T> collection, Action<T[]> action, Comparison<T> comparison)
-        {
             T[] array = collection.ToArray();
-            Array.Sort(array, comparison);
-            while (true)
+            int length = array.Length;
+            int[] c = new int[length];
+            int[] o = new int[length];
+            for (int i = 0; i < length; i++)
+            {
+                o[i] = 1;
+            }
+
+            do
             {
                 action(array);
-                int count = array.Length;
-                int j = count - 2;
-                while (true)
+                int j = length - 1;
+                int s = 0;
+                int q;
+                do
                 {
-                    if (j == -1)
-                        return;
-                    if (comparison(array[j], array[j + 1]) >= 0)
+                    q = c[j] + o[j];
+                    if (q < 0)
                     {
+                        o[j] = -o[j];
                         j--;
+                        continue;
                     }
-                    else
-                        break;
-                }
+                    if (q == j + 1)
+                    {
+                        if (j == 0)
+                        {
+                            return;
+                        }
+                        s++;
+                        o[j] = -o[j];
+                        j--;
+                        continue;
+                    }
+                    break;
+                } while (true);
 
-                int l = count - 1;
-                while (comparison(array[j], array[l]) >= 0)
-                {
-                    l--;
-                }
-                T exchange = array[j];
-                array[j] = array[l];
-                array[l] = exchange;
-
-                int k = j + 1;
-                l = count - 1;
-                while (k < l)
-                {
-                    exchange = array[k];
-                    array[k] = array[l];
-                    array[l] = exchange;
-                    k++;
-                    l--;
-                }
-            }
+                int exchangIndex1 = j - c[j] + s;
+                int exchangIndex2 = j - q + s;
+                T exchange = array[exchangIndex1];
+                array[exchangIndex1] = array[exchangIndex2];
+                array[exchangIndex2] = exchange;
+                c[j] = q;
+            } while (true);
         }
 
         #endregion
@@ -118,91 +114,56 @@ namespace ExtensionLibrary.Algorithms
                 throw new InvalidOperationException("The number of items that collection contains is no more than combinationNumber!");
             }
 
-            int[] c = new int[combinationNumber + 3];
-            for (int i = 1; i <= combinationNumber; i++)
+            if (originalArray.Length == combinationNumber)
             {
-                c[i] = i - 1;
+                action(originalArray);
+                return;
             }
-            c[combinationNumber + 1] = originalArray.Length;
-            c[combinationNumber + 2] = 0;
+
+            int[] c = new int[combinationNumber + 2];
+            for (int i = 0; i < combinationNumber; i++)
+            {
+                c[i] = i;
+            }
+            c[combinationNumber] = originalArray.Length;
+            c[combinationNumber + 1] = 0;
+            int j = combinationNumber - 1;
             do
             {
-                for (int i = 1; i <= combinationNumber; i++)
+                for (int i = 0; i < combinationNumber; i++)
                 {
-                    if (c[i] < 0)
-                    {
-                        Console.WriteLine("i:{0} value:{1}", i, c[i]);
-                    }
-                    scanArray[i - 1] = originalArray[c[i]];
-                }
-                action(scanArray);
-                int j = 1;
-                while (c[j] + 1 == c[j + 1])
-                {
-                    c[j] = j - 1;
-                    j++;
-                }
-
-                if (j > combinationNumber)
-                    break;
-                c[j]++;
-
-            } while (true);
-        }
-
-        public static void GetCombination2<T>(IEnumerable<T> collection, int t, Action<T[]> action, Comparison<T> comparison)
-        {
-            T[] originalArray = collection.ToArray();
-            T[] scanArray = new T[t];
-            if (originalArray.Length < t)
-            {
-                throw new InvalidOperationException("The number of items that collection contains is no more than t!");
-            }
-
-            int[] c = new int[t + 3];
-            for (int i = 1; i <= t; i++)
-            {
-                c[i] = i - 1;
-            }
-            c[t + 1] = originalArray.Length;
-            c[t + 2] = 0;
-            int j = t;
-            do
-            {
-                for (int i = 1; i <= t; i++)
-                {
-                    if (c[i] < 0)
-                    {
-                        Console.WriteLine("i:{0} value:{1}", i, c[i]);
-                    }
-                    scanArray[i - 1] = originalArray[c[i]];
+                    scanArray[i] = originalArray[c[i]];
                 }
                 action(scanArray);
                 int x;
 
-                if (j > 0)
+                if (j >= 0)
                 {
                     x = j;
-                    c[j] = x;
+                    c[j] = x + 1;
                     j--;
                     continue;
                 }
 
-                if (c[1] + 1 < c[2])
+                if (c[0] + 1 < c[1])
                 {
-                    c[1]++;
+                    c[0]++;
                     continue;
                 }
 
-                j = 2;
-                c[j - 1] = j - 2;
-                x = c[j] + 1;
-                while (x == c[j + 1])
+                j = 1;
+                do
                 {
-                    j++;
-                }
+                    c[j - 1] = j - 1;
+                    x = c[j] + 1;
+                    if (x == c[j + 1])
+                    {
+                        j++;
+                    }
+                    else break;
+                } while (true);
 
-                if (j > t)
+                if (j >= combinationNumber)
                 {
                     return;
                 }
