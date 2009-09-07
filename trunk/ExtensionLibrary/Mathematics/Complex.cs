@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ExtensionLibrary.Mathematics
 {
+    /// <summary>
+    /// ¸´ÊýÀà
+    /// </summary>
     public class Complex
     {
         #region Fields
@@ -48,6 +51,31 @@ namespace ExtensionLibrary.Mathematics
 
         #region Methods
 
+        public static Complex Add(Complex c1, Complex c2)
+        {
+            return new Complex(c1.imag + c2.imag, c1.real + c2.real);
+        }
+
+        public static Complex Substract(Complex c1, Complex c2)
+        {
+            return new Complex(c1.imag - c2.imag, c1.real - c2.real);
+        }
+
+        public static Complex Multiple(Complex c1, Complex c2)
+        {
+            throw new NotImplementedException();            
+        }
+
+        public static Complex Divide(Complex c1, Complex c2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Complex Negative(Complex c)
+        {
+            return new Complex(-c.imag, -c.real);
+        }
+
         public static Complex Sin(Complex c)
         {
             throw new NotImplementedException();
@@ -56,7 +84,6 @@ namespace ExtensionLibrary.Mathematics
         public static Complex Cos(Complex c)
         {
             throw new NotImplementedException();
-            
         }
 
         public static Complex Tan(Complex c)
