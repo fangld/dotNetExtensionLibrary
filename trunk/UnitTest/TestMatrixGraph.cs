@@ -66,6 +66,50 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestDepthFirstSearch()
+        {
+            MatrixGraph graph = new MatrixGraph(4, 10);
+            graph.SetUniEdge(0, 1, 2);
+            graph.SetUniEdge(1, 2, 5);
+            graph.SetUniEdge(0, 2, 6);
+            graph.SetUniEdge(1, 3, 2);
+            graph.SetUniEdge(2, 3, 2);
+            graph.SetUniEdge(3, 2, 2);
+            graph.DepthFirstSearch(0);
+
+            Console.WriteLine();
+            graph.DepthFirstSearch(1);
+
+            Console.WriteLine();
+            graph.DepthFirstSearch(2);
+
+            Console.WriteLine();
+            graph.DepthFirstSearch(3);
+        }
+
+        [Test]
+        public void TestBreadthFirstSearch()
+        {
+            MatrixGraph graph = new MatrixGraph(4, 10);
+            graph.SetUniEdge(0, 1, 2);
+            graph.SetUniEdge(1, 2, 5);
+            graph.SetUniEdge(0, 2, 6);
+            graph.SetUniEdge(1, 3, 2);
+            graph.SetUniEdge(2, 3, 2);
+            graph.SetUniEdge(3, 2, 2);
+            graph.BreadthFirstSearch(0);
+
+            Console.WriteLine();
+            graph.BreadthFirstSearch(1);
+
+            Console.WriteLine();
+            graph.BreadthFirstSearch(2);
+
+            Console.WriteLine();
+            graph.BreadthFirstSearch(3);
+        }
+
+        [Test]
         public void TestBinaryHeapDijkstra()
         {
             Random ran = new Random();

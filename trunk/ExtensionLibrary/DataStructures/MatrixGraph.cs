@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace ExtensionLibrary.DataStructures
 {
@@ -73,6 +74,65 @@ namespace ExtensionLibrary.DataStructures
         #endregion
 
         #region Methods
+
+        public void DepthFirstSearch(int sourceIndex)
+        {
+            Stack<int> stack = new Stack<int>();
+            bool[] visit = new bool[count];
+            for (int i = 0; i < count; i++)
+            {
+                visit[i] = false;
+            }
+            stack.Push(sourceIndex);
+            visit[sourceIndex] = true;
+            do
+            {
+                int currentIndex = stack.Pop();
+#if DEBUG
+                Console.WriteLine(currentIndex);
+#endif
+                for (int i = 0; i < count; i++)
+                {
+                    double length = matrix[currentIndex][i];
+
+                    if (length != maxDistance && !visit[i])
+                    {
+                        stack.Push(i);
+                        visit[i] = true;
+                    }
+                }
+            } while (stack.Count != 0);
+        }
+
+        public void BreadthFirstSearch(int sourceIndex)
+        {
+            Queue<int> queue = new Queue<int>();
+            bool[] visit = new bool[count];
+            for (int i = 0; i < count; i++)
+            {
+                visit[i] = false;
+            }
+            queue.Enqueue(sourceIndex);
+            visit[sourceIndex] = true;
+            do
+            {
+                int currentIndex = queue.Dequeue();
+#if DEBUG
+                Console.WriteLine(currentIndex);
+#endif
+                for (int i = 0; i < count; i++)
+                {
+                    double length = matrix[currentIndex][i];
+
+                    if (length != maxDistance && !visit[i])
+                    {
+                        queue.Enqueue(i);
+                        visit[i] = true;
+
+                    }
+                }
+            } while (queue.Count != 0);
+        }
 
         /// <summary>
         /// Dijkstra algorithm
