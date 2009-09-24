@@ -110,6 +110,54 @@ namespace UnitTest
         }
 
         [Test]
+        public void TestGetCutPoints1()
+        {
+            MatrixGraph graph = new MatrixGraph(9, 10);
+            graph.SetBidEdge(0, 1, 1);
+            graph.SetBidEdge(1, 2, 1);
+            graph.SetBidEdge(2, 0, 1);
+            graph.SetBidEdge(1, 3, 1);
+            graph.SetBidEdge(1, 4, 1);
+            graph.SetBidEdge(3, 4, 1);
+            graph.SetBidEdge(3, 5, 1);
+            graph.SetBidEdge(5, 6, 1);
+            graph.SetBidEdge(5, 7, 1);
+            graph.SetBidEdge(5, 8, 1);
+            graph.SetBidEdge(6, 7, 1);
+            graph.SetBidEdge(7, 8, 1);
+
+            HashSet<int> cutPoints = graph.GetCutPoints();
+            Assert.AreEqual(4, cutPoints.Count);
+            Assert.IsTrue(cutPoints.Contains(0));
+            Assert.IsTrue(cutPoints.Contains(1));
+            Assert.IsTrue(cutPoints.Contains(3));
+            Assert.IsTrue(cutPoints.Contains(5));
+        }
+
+        [Test]
+        public void TestGetCutPoints2()
+        {
+            MatrixGraph graph = new MatrixGraph(9, 10);
+            graph.SetBidEdge(0, 1, 1);
+            graph.SetBidEdge(1, 2, 1);
+            graph.SetBidEdge(1, 3, 1);
+            graph.SetBidEdge(1, 4, 1);
+            graph.SetBidEdge(3, 4, 1);
+            graph.SetBidEdge(3, 5, 1);
+            graph.SetBidEdge(5, 6, 1);
+            graph.SetBidEdge(5, 7, 1);
+            graph.SetBidEdge(5, 8, 1);
+            graph.SetBidEdge(6, 7, 1);
+            graph.SetBidEdge(7, 8, 1);
+
+            HashSet<int> cutPoints = graph.GetCutPoints();
+            Assert.AreEqual(3, cutPoints.Count);
+            Assert.IsTrue(cutPoints.Contains(1));
+            Assert.IsTrue(cutPoints.Contains(3));
+            Assert.IsTrue(cutPoints.Contains(5));
+        }
+
+        [Test]
         public void TestBinaryHeapDijkstra()
         {
             Random ran = new Random();

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -132,6 +133,68 @@ namespace ExtensionLibrary.DataStructures
                     }
                 }
             } while (queue.Count != 0);
+        }
+
+        public HashSet<int> GetCutPoints()
+        {
+            HashSet<int> result = new HashSet<int>();
+            bool[] visited = new bool[count];
+            int searchNumber = 0;
+            int[] dfNumber = new int[count];
+            int[] low = new int[count];
+            SearchCutPoints(0, ref searchNumber, visited, dfNumber, low, result);
+
+            int firstRootChildrenIndex = 1;
+            for (int i = 1; i < count; i++)
+            {
+                if (matrix[0][i] < maxDistance)
+                {
+                    firstRootChildrenIndex = i;
+                    break;
+                }
+            }
+
+            for (int i = firstRootChildrenIndex + 1; i < count; i++)
+            {
+                if (matrix[0][i] < maxDistance)
+                {
+                    return result;
+                }
+            }
+
+            result.Remove(0);
+
+            return result;
+        }
+
+        private void SearchCutPoints(int index, ref int searchNumber, bool[] visited, int[] dfNumber, int[] low, HashSet<int> cutPoints)
+        {
+            visited[index] = true;
+            dfNumber[index] = searchNumber;
+            searchNumber++;
+            low[index] = dfNumber[index];
+            for (int i = 0; i < count; i++)
+            {
+                if (matrix[index][i] != maxDistance && i != index)
+                {
+                    if (!visited[i])
+                    {
+                        SearchCutPoints(i, ref searchNumber, visited, dfNumber, low, cutPoints);
+                        if (low[i] >= dfNumber[index])
+                        {
+                            cutPoints.Add(index);
+                        }
+                        if (low[i] < low[index])
+                        {
+                            low[index] = low[i];
+                        }
+                    }
+                    else if (dfNumber[i] < low[index])
+                    {
+                        low[index] = dfNumber[i];
+                    }
+                }
+            }
         }
 
         /// <summary>
